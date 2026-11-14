@@ -1,4 +1,4 @@
-# Agentic housing
+# Agentic design
 
 ![The viewer](./viewer/images/viewer_banner.png)
 
