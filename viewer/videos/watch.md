@@ -2,7 +2,7 @@
 
 These are screenshots of the viewer tool, and help build a stronger intuition for the products of this research.  
 
-Each room is a square and the lines connecting adjacent ones represent corridors through their shared doors. Lines without a square represent hallways.
+Each room is a square and the lines connecting adjacent ones represent corridors through their shared doors. Lines without a square represent hallways. Yellow rooms are the ones added by the agent.
 
 ## House 1 - default / simplify + cost / cost 
 
