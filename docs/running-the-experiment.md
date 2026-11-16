@@ -144,6 +144,16 @@ cost and cost-only runs, and chain 10 on seed house 2 in the hallway run:
 
 House 2 in the hallway run takes chain 10.
 
+### Trying the settings without model calls
+
+Before spending calls on a chain, run it with a fake `ask` that returns a canned `Reply`, as the tests do: call
+`run_next_chain` with a scratch `runs_dir` and `seed_dir` pointing at the real seed houses, and the same model,
+effort and agent settings the real chain would use. The prompt, label, version check and retry rules are then the
+ones the real run uses, and no saved record is touched. The tests set the 15×15 grid first, as a run does. A
+cut-off reply ends the chain after six tries, enough to see the labels and the prompt. What the dry run cannot show
+is whether the model accepts the settings or what a call costs. `tests/test_run_100_rooms.py` has the working
+example.
+
 ## Running by hand
 
 The same chain can be run with any agent, one step at a time, in the order A to J:
