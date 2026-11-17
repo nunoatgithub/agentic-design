@@ -111,10 +111,14 @@ rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek
 step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not stop refactoring.
 Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked to reorganise, it
 kept refactoring as the house grew. With a cost on every command as well, it went back to refactoring once. With the
-cost and no request to reorganise, it did not refactor at all. In most runs it made no clear difference whether the
-rooms were added one at a time or all at once. The exception was the run with a cost and no request to reorganise, the
-same conditions in which the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended
-with more corridor rooms when built one room at a time than when built all at once. Sonnet's houses did not.
+cost and no request to reorganise, it did not refactor at all. Claude Fable 5.2, left to itself, rebuilt one of its
+two houses early; in the other, no agent adding one room rebuilt it, and the agents adding all the rooms at once
+rebuilt it only while it was still close to the seed. Asked to reorganise, Fable refactored a few times. With a cost
+on every command as well, its all-at-once agents refactored more often, not less. With the cost alone it did not
+refactor. In most runs it made no clear difference whether the rooms were added one at a time or all at once. The
+exceptions were one of Fable's two houses in run 1, and the run with a cost and no request to reorganise, the same
+conditions in which the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended with
+more corridor rooms when built one room at a time than when built all at once. Sonnet's houses did not.
 
 ## Repository
 

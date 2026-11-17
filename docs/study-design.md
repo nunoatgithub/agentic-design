@@ -134,8 +134,10 @@ The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All 
 
 A chain has 59 calls, made in this order: all at once from step 0, step 1, all at once from step 1, step 2, and so on. Every agent is fresh, with no tools, no memory and no score feedback. A failed call (script rejected or house invalid) is tried again with a fresh agent, up to 3 tries. If a one-room step still fails, that chain's one-room steps stop, and the all-at-once calls from the steps already reached are still made. A reply cut off by the output limit is recorded as cut off, not as an invalid house. No agent builds the 100-room house from scratch.
 
-**Agents.** The Sonnet, Opus and GPT-6 Luna chains are at medium effort. Opus 5.5 ran chain 9 on seed house 1 in the
-hallway, reorganising, cost and cost-only runs, and chain 10 on seed house 2 in the hallway run. DeepSeek chains 5 and 7 in the hallway run and in
+**Agents.** The Sonnet, Opus, Fable and GPT-6 Luna chains are at medium effort. Opus 5.5 ran chain 9 on seed house 1 in the
+hallway, reorganising, cost and cost-only runs, and chain 10 on seed house 2 in the hallway run. Fable 5.2 ran chain 13
+on seed house 1 in the same four runs, chain 17 on seed house 1 in the hallway run, and chain 14 on seed house 2 in the
+hallway run. DeepSeek chains 5 and 7 in the hallway run and in
 the reorganising run (seed houses 1 and 3; chains 6 and 8 not run) and chains 1 and 3 in the cost run and in the
 cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking, with the model `deepseek-flash`
 (DeepSeek-V4.1-Flash-1017): it posts the house prompt to DeepSeek's Anthropic-compatible
@@ -148,18 +150,23 @@ and is reported separately. DeepSeek is many times slower than Sonnet (a mean of
 | Hallways     | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.310                                            |
 | Hallways     | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Hallways     | 9, 10  | 1, 2        | Opus 5.5       | Claude Code 2.1.322                                            |
+| Hallways     | 13, 17 | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
+| Hallways     | 14     | 2           | Fable 5.2      | Claude Code 2.1.325                                            |
 | No hallways  | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
 | No hallways  | 5–8    | 1–4         | GPT-6 Luna     | GitHub Copilot CLI 1.0.105                                     |
 | No hallways  | 9–12   | 1–4         | Sonnet 5.5     | Claude Code 2.1.314                                            |
 | Reorganising | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.314 (chain 1), 2.1.319 (chains 2–4)            |
 | Reorganising | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Reorganising | 9      | 1           | Opus 5.5       | Claude Code 2.1.325                                            |
+| Reorganising | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
 | Cost         | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Cost         | 5–8    | 1–4         | Sonnet 5.5     | Claude Code 2.1.322                                            |
 | Cost         | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
+| Cost         | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
 | Cost only    | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Cost only    | 5, 7   | 1, 3        | Sonnet 5.5     | Claude Code 2.1.322                                            |
 | Cost only    | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
+| Cost only    | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
 
 The models are reported separately, never pooled.
 

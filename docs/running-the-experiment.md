@@ -144,6 +144,22 @@ cost and cost-only runs, and chain 10 on seed house 2 in the hallway run:
 
 House 2 in the hallway run takes chain 10.
 
+The Fable 5.2 chains run the same way: chain 13 on seed house 1 in the hallway, reorganising, cost and cost-only runs,
+chain 17 as a second chain on seed house 1 in the hallway run, and chain 14 on seed house 2 in the hallway run:
+
+```
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms --model fable52 --effort medium --house 1 --chain 13
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms --model fable52 --effort medium --house 1 --chain 17
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms --model fable52 --effort medium --house 2 --chain 14
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor --model fable52 --effort medium --house 1 --chain 13
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor_cost --refactor --cost --model fable52 --effort medium --house 1 --chain 13
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_cost --cost --model fable52 --effort medium --house 1 --chain 13
+```
+
+In the cost run, Fable's chain 13 stopped three times on a step whose three tries were all scripts wrapped in a code
+fence (steps 6, 16 and 17). Each time the three failed records were deleted and the chain was resumed from that step;
+the report says so in its failed tries of run 4.
+
 ### Trying the settings without model calls
 
 Before spending calls on a chain, run it with a fake `ask` that returns a canned `Reply`, as the tests do: call

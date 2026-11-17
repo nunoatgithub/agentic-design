@@ -22,7 +22,7 @@ from . import experiment
 from .experiment import EFFORT, MODEL, Label, attach_usage, load_runs, request_for, send
 from .prompt import build_prompt
 
-MODEL_IDS = {"sonnet55": "claude-sonnet-5-5", "opus55": "claude-opus-5-5", "fable51": "claude-fable-5-1",
+MODEL_IDS = {"sonnet55": "claude-sonnet-5-5", "opus55": "claude-opus-5-5", "fable52": "claude-fable-5-2",
              "haiku55": "claude-haiku-5-5"}
 SYSTEM_PROMPT = "You are a helpful assistant."
 MAX_OUTPUT_TOKENS = 128000           # the most the model allows, thinking included

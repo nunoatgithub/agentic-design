@@ -11,18 +11,22 @@ grown to 100, either one room at a time or all the remaining rooms at once. Ther
 runs: with hallways, without hallways, with a request to reorganise the house before adding to it, with that request
 and a cost on every command, and with the cost alone.
 
-Claude Sonnet 5.5 refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring
-and only added rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more
-than Sonnet, both step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not
-stop refactoring. Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked
-to reorganise, it kept refactoring as the house grew. With a cost on every command as well, it went back to
-refactoring once. With the cost and no request to reorganise, it did not refactor at all. GPT-6 Luna, in the run
-without hallways, refactored the badly grown houses without being asked. Refactoring was not the same as improving.
+Claude Sonnet 5.5 refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring and
+only added rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more than
+Sonnet, both step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not stop
+refactoring. Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked to
+reorganise, it kept refactoring as the house grew. With a cost on every command as well, it went back to refactoring
+once. With the cost and no request to reorganise, it did not refactor at all. Claude Fable 5.2, left to itself, rebuilt
+one of its two houses early; in the other, no agent adding one room rebuilt it, and the agents adding all the rooms at
+once rebuilt it only while it was still close to the seed. Asked to reorganise, Fable refactored a few times. With a
+cost on every command as well, its all-at-once agents refactored more often, not less. With the cost alone it did not
+refactor. GPT-6 Luna, in the run without hallways, refactored the badly grown houses without being asked. Refactoring
+was not the same as improving.
 
-In most runs it made no clear difference whether the rooms were added one at a time or all at once. The exception was
-the run with a cost and no request to reorganise, the same conditions in which the small grid showed a difference. In
-that run, Opus's house and one of DeepSeek's two ended with more corridor rooms when built one room at a time than when
-built all at once. Sonnet's houses did not.
+In most runs it made no clear difference whether the rooms were added one at a time or all at once. The exceptions were
+one of Fable's two houses in run 1, and the run with a cost and no request to reorganise, the same conditions in which
+the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended with more corridor rooms
+when built one room at a time than when built all at once. Sonnet's houses did not.
 
 [Watch the videos](viewer/videos/watch.md) of the houses growing. They were recorded in [the viewer](viewer/README.md),
 and the viewer plays every chain of this report step by step.
@@ -68,6 +72,8 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
     in run 4 (2.1.322); and two in run 5, houses 1 and 3 (2.1.322).
   - Claude Opus 5.5 at medium effort, through Claude Code: two chains in run 1, houses 1 and 2, and one in each of
     runs 3, 4 and 5, house 1 (2.1.322; 2.1.325 in run 3).
+  - Claude Fable 5.2 at medium effort, through Claude Code (2.1.325): three chains in run 1, two on house 1 and
+    one on house 2, and one in each of runs 3, 4 and 5, house 1.
   - DeepSeek flash (DeepSeek-V4.1-Flash-1017) at low thinking, through a separate adapter (version
     1): two chains, houses 1 and 3, in each of runs 1, 3, 4 and 5.
   - GPT-6 Luna at medium effort: four chains in run 2, one per seed house (GitHub Copilot CLI 1.0.105).
@@ -130,13 +136,31 @@ Opus 5.5:
 |            | 10    | Opus 5.5 | all at once from step 0  | 0              | 0.0000        | 11.14            | 0           |
 |            | 10    | Opus 5.5 | all at once from step 15 | 0              | 0.0000        | 11.71            | 4           |
 
+Fable 5.2:
+
+| Seed house | Chain | Model     | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
+| ---------- | ----- | --------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
+| 1          |       |           | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 13    | Fable 5.2 | after step 30            | 43             | 0.0026        | 15.20            | 30          |
+|            | 13    | Fable 5.2 | all at once from step 0  | 0              | 0.0000        | 10.26            | 0           |
+|            | 13    | Fable 5.2 | all at once from step 15 | 42             | 0.0026        | 15.21            | 32          |
+|            | 17    | Fable 5.2 | after step 30            | 45             | 0.0026        | 17.16            | 36          |
+|            | 17    | Fable 5.2 | all at once from step 0  | 0              | 0.0000        | 11.05            | 0           |
+|            | 17    | Fable 5.2 | all at once from step 15 | 44             | 0.0026        | 17.04            | 38          |
+| 2          |       |           | seed house (70 rooms)    | 42             | 0.0037        | 9.91             | 12          |
+|            | 14    | Fable 5.2 | after step 30            | 0              | 0.0000        | 11.14            | 10          |
+|            | 14    | Fable 5.2 | all at once from step 0  | 0              | 0.0000        | 11.65            | 2           |
+|            | 14    | Fable 5.2 | all at once from step 15 | 0              | 0.0000        | 11.12            | 8           |
+
 We expected the house built step by step to end no worse than the one built all at once from the seed, as on the small
 grid. For Sonnet it ended worse on one score, corridor rooms: in every house, the house built step by step had more
 rooms that people must walk through, while the one built all at once kept about as many as the seed had. On the other
 scores, building step by step mostly did better: its houses were shorter to walk in all four houses and more compact
 in three of the four, and privacy order was the same either way. Built step by step or all at once
-from the seed, DeepSeek's and Opus's houses ended with no corridor rooms, or one at most. Every step's scores are in
-Appendix A.
+from the seed, DeepSeek's and Opus's houses ended with no corridor rooms, or one at most. Fable's depended on the house.
+In house 2 they ended with no corridor rooms, built either way. In house 1, in both chains, the house built step by
+step ended with 43 and 45 corridor rooms, against none for the house built all at once from the seed, and the house
+built all at once from step 15 ended with 42 and 44. Every step's scores are in Appendix A.
 
 ### 3.2 What the agents changed
 
@@ -146,6 +170,8 @@ Appendix A.
 | Sonnet 5.5     | All at once     | 116    | 78                         | 3                               | 2.5%                                         | 10.47                    |
 | Opus 5.5       | Step by step    | 60     | 32                         | 58                              | 77.3%                                        | 1.83                     |
 | Opus 5.5       | All at once     | 58     | 46                         | 50                              | 66.7%                                        | 14.48                    |
+| Fable 5.2      | Step by step    | 90     | 54                         | 56                              | 73.7%                                        | 1.02                     |
+| Fable 5.2      | All at once     | 87     | 70                         | 74                              | 74.7%                                        | 22.98                    |
 | DeepSeek flash | Step by step    | 60     | 34                         | 115                             | 74.5%                                        | 2.40                     |
 | DeepSeek flash | All at once     | 58     | 41                         | 110                             | 76.3%                                        | 24.64                    |
 
@@ -162,6 +188,12 @@ Opus refactored once, at the start. In each house its first step and its first a
 65% and 77% of the house, and no later agent refactored. It added 1.83 hallways per step and
 14.48 per all-at-once agent.
 
+Fable refactored in house 2 the way Opus did: its second step removed 74% of the house, its first two all-at-once
+agents 75% and 72%, and no later agent refactored. In house 1, in both chains, no step removed more than 1% of the
+house. Its all-at-once agents did refactor, removing 60–74% of the house each time, but only while the house was close
+to the seed: 21 of 22 of those working from steps 0 to 10 refactored, and 4 of 36 of those working
+from step 11 on.
+
 ### 3.3 Why it happens
 
 Working all at once, Sonnet saw every missing room, so it could lay out hallways to serve them all. It built them as a
@@ -177,6 +209,11 @@ walk through.
 
 Opus laid the house out again with its first agent of each kind, then kept that layout and added each new room to it.
 
+Fable did the same in house 2, with its second step. In house 1 its steps worked as Sonnet's did: each kept the house
+and gave the new room a door into a room already there, so the seed's corridor rooms stayed and a few more were added.
+Its all-at-once agents rebuilt the house while it was still close to the seed; once the steps had grown it further,
+they mostly kept it and added to it, and those houses ended with as many corridor rooms as the steps' houses.
+
 ### 3.4 Failed tries and cost
 
 | Model          | Way of building | Tries | Valid | Script rejected | House invalid | Reply cut off | Output tokens per try | Cost per try |
@@ -185,12 +222,15 @@ Opus laid the house out again with its first agent of each kind, then kept that 
 | Sonnet 5.5     | All at once     | 123   | 116   | 2               | 5             | 0             | 2661                  | $0.043       |
 | Opus 5.5       | Step by step    | 61    | 60    | 0               | 1             | 0             | 1238                  | $0.061       |
 | Opus 5.5       | All at once     | 66    | 58    | 8               | 0             | 0             | 4480                  | $0.122       |
+| Fable 5.2      | Step by step    | 95    | 90    | 5               | 0             | 0             | 951                   | $0.101       |
+| Fable 5.2      | All at once     | 91    | 87    | 4               | 0             | 0             | 3719                  | $0.212       |
 | DeepSeek flash | Step by step    | 62    | 60    | 0               | 2             | 0             | 6942                  | $0.004       |
 | DeepSeek flash | All at once     | 62    | 58    | 0               | 4             | 0             | 15605                 | $0.010       |
 
 When an agent failed, a fresh one tried again, and every step was done within three tries, so every chain has all 59
-houses. The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's
-published prices.
+houses. Most of Fable's failed tries, in this run and the others, were scripts wrapped in a Markdown code fence (```),
+which the server does not read as commands. The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek
+costs are worked out from DeepSeek's published prices.
 
 ## 4. Run 2: no hallway can be built
 
@@ -358,6 +398,15 @@ Opus 5.5:
 |            | 9     | Opus 5.5 | all at once from step 0  | 0              | 0.0026        | 14.77            | 0           |
 |            | 9     | Opus 5.5 | all at once from step 15 | 0              | 0.0000        | 10.29            | 0           |
 
+Fable 5.2:
+
+| Seed house | Chain | Model     | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
+| ---------- | ----- | --------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
+| 1          |       |           | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 13    | Fable 5.2 | after step 30            | 0              | 0.0000        | 11.07            | 2           |
+|            | 13    | Fable 5.2 | all at once from step 0  | 0              | 0.0000        | 11.05            | 0           |
+|            | 13    | Fable 5.2 | all at once from step 15 | 0              | 0.0000        | 11.75            | 2           |
+
 The house built all at once from step 2 in house 1, chain 5 (DeepSeek flash) is missing: all three tries were rejected, and the chain carried on
 without it. Every step's scores are in Appendix C.
 
@@ -372,8 +421,8 @@ The request changed what the agents did. The first steps removed most of the see
 five of the six houses built step by step ended with no corridor rooms. One all-at-once agent working
 from the seed did not rebuild: it kept the seed house, added a wing, and so kept the seed's corridor rooms. Of the six
 houses built all at once from the seed, five ended with none. Since both kinds of agent rebuilt, corridor
-rooms no longer told the two ways of building apart. Only the length of the walk still differed. Opus's houses all
-ended with no corridor rooms.
+rooms no longer told the two ways of building apart. Only the length of the walk still differed. Opus's and Fable's
+houses all ended with no corridor rooms.
 
 ### 5.2 What the agents changed
 
@@ -383,18 +432,21 @@ ended with no corridor rooms.
 | Sonnet 5.5     | All at once     | 116    | 73                         | 107                             | 73.8%                                        | 11.65                    |
 | Opus 5.5       | Step by step    | 30     | 22                         | 117                             | 70.9%                                        | 1.90                     |
 | Opus 5.5       | All at once     | 29     | 26                         | 95                              | 77.3%                                        | 14.03                    |
+| Fable 5.2      | Step by step    | 30     | 16                         | 51                              | 62.7%                                        | 1.77                     |
+| Fable 5.2      | All at once     | 29     | 24                         | 54                              | 72.0%                                        | 13.24                    |
 | DeepSeek flash | Step by step    | 60     | 58                         | 195                             | 94.8%                                        | 1.77                     |
 | DeepSeek flash | All at once     | 57     | 53                         | 190                             | 94.4%                                        | 13.88                    |
 
-The table adds up every chain of a model: four seed houses for Sonnet, two for DeepSeek and one for Opus, so its rows
-do not compare like with like. It also counts every agent that removed a room, even a single one, while an agent
-refactored only when it removed or replaced 10% or more of the house.
+The table adds up every chain of a model: four seed houses for Sonnet, two for DeepSeek and one each for Opus and Fable,
+so its rows do not compare like with like. It also counts every agent that removed a room, even a single one, while an
+agent refactored only when it removed or replaced 10% or more of the house.
 
-House 1 is the one all three models built, and there the difference is clear. Sonnet refactored at the start and then
+House 1 is the one all four models built, and there the difference is clear. Sonnet refactored at the start and then
 mostly kept what it had: 1 step refactored, the first, and 2 all-at-once agents, the
 first and the one from step 21. DeepSeek refactored in 23 of its 30 steps and 23 of
 its all-at-once agents. Opus came in between: 9 of its 30 steps and 19 of its 29
-all-at-once agents refactored.
+all-at-once agents refactored. Fable refactored less often than Opus: 3 of its 30 steps, at steps 1, 18 and 28, and 3
+of its 29 all-at-once agents.
 
 On the other seed houses Sonnet's steps also refactored mostly at the start, with one exception: in house 4 the first
 step changed only 11% of the house, and step 15 laid out 81% of it again. Two later steps, in houses 2 and 3, changed
@@ -412,7 +464,8 @@ made the agents rebuild, and where it failed, it failed for a single agent, not 
 same as improving.
 
 Opus reorganised at intervals: each step that laid the house out again (steps 1, 8, 13, 18, 20, 24, 25, 26 and 28) was followed by
-steps that changed less than 10% of it.
+steps that changed less than 10% of it. Fable rebuilt the house at its first step, removing 63% of it, and twice more,
+at steps 18 and 28, removing 38% and 25%.
 
 ### 5.4 Failed tries and cost
 
@@ -422,10 +475,12 @@ steps that changed less than 10% of it.
 | Sonnet 5.5     | All at once     | 119   | 116   | 1               | 2             | 0             | 4246                  | $0.060       |
 | Opus 5.5       | Step by step    | 32    | 30    | 2               | 0             | 0             | 6470                  | $0.163       |
 | Opus 5.5       | All at once     | 29    | 29    | 0               | 0             | 0             | 8565                  | $0.208       |
+| Fable 5.2      | Step by step    | 30    | 30    | 0               | 0             | 0             | 2607                  | $0.178       |
+| Fable 5.2      | All at once     | 30    | 29    | 1               | 0             | 0             | 3541                  | $0.213       |
 | DeepSeek flash | Step by step    | 66    | 60    | 4               | 2             | 0             | 20007                 | $0.012       |
 | DeepSeek flash | All at once     | 70    | 57    | 8               | 5             | 0             | 20849                 | $0.013       |
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices. In run 3, building and demolishing cost nothing.
 
 ## 6. Run 4: reorganise, with cost
@@ -475,13 +530,23 @@ Opus 5.5:
 |            | 9     | Opus 5.5 | all at once from step 0  | 0              | 0.0000        | 13.76            | 0           |
 |            | 9     | Opus 5.5 | all at once from step 15 | 0              | 0.0000        | 11.08            | 6           |
 
+Fable 5.2:
+
+| Seed house | Chain | Model     | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
+| ---------- | ----- | --------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
+| 1          |       |           | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 13    | Fable 5.2 | after step 30            | 0              | 0.0026        | 13.05            | 8           |
+|            | 13    | Fable 5.2 | all at once from step 0  | 0              | 0.0026        | 13.89            | 0           |
+|            | 13    | Fable 5.2 | all at once from step 15 | 47             | 0.0026        | 11.82            | 26          |
+
 Every step's scores are in Appendix D.
 
 In the Sonnet chains, building step by step mostly ended with more corridor rooms but a shorter walk. The house built
 step by step had more corridor rooms than the one built all at once from the seed in three of the four
 houses, and fewer in one. It was shorter to walk in three, and longer in
 one. DeepSeek's houses, built either way, ended with no corridor rooms, and those built step by step
-were longer to walk. Opus's houses all ended with no corridor rooms.
+were longer to walk. Opus's houses all ended with no corridor rooms. Fable's house built step by step and the one built
+all at once from the seed ended with none, and the one built all at once from step 15 with 47.
 
 ### 6.2 What the agents changed
 
@@ -491,6 +556,8 @@ were longer to walk. Opus's houses all ended with no corridor rooms.
 | Sonnet 5.5     | All at once     | 116    | 35                         | 2                               | 2.2%                                         | 6.91                     |
 | Opus 5.5       | Step by step    | 30     | 19                         | 29                              | 38.7%                                        | 1.97                     |
 | Opus 5.5       | All at once     | 29     | 23                         | 27                              | 36.0%                                        | 11.62                    |
+| Fable 5.2      | Step by step    | 30     | 15                         | 27                              | 27.0%                                        | 1.83                     |
+| Fable 5.2      | All at once     | 29     | 26                         | 34                              | 41.0%                                        | 27.93                    |
 | DeepSeek flash | Step by step    | 60     | 44                         | 116                             | 83.5%                                        | 1.13                     |
 | DeepSeek flash | All at once     | 58     | 42                         | 125                             | 94.7%                                        | 16.19                    |
 
@@ -506,6 +573,10 @@ refactored in 10 and 13 of the 30 steps in each house, against 23 and 25 in run 
 Opus refactored once: its first step removed 39% of the house and its first all-at-once agent 36%, and no later agent
 refactored. In run 3, without the cost, 9 of its steps did.
 
+Fable refactored more with the cost than without when it added all the rooms at once: 14 of its 29 all-at-once agents
+refactored, removing 26–41% of the house each, against 3 in run 3. Step by step it refactored once, at step 19: that
+step removed 27% of the house and took its corridor rooms from 48 to 0.
+
 ### 6.3 Why it happens
 
 The prompt asks for two things: reorganise the house, and keep the total cost of the script low. Refactoring means
@@ -513,7 +584,10 @@ removing rooms and building them again, and every one of those commands costs so
 median step cost 5, the new room and one door, and none cost more than 20. It
 only added to the house, as in run 1, where nobody asked it to reorganise. DeepSeek chose to reorganise: its median
 step cost 29.5, and one cost 1694. The cost made it refactor less often than in run 3,
-but did not stop it. Opus kept its first refactoring and dropped the later ones it made in run 3.
+but did not stop it. Opus kept its first refactoring and dropped the later ones it made in run 3. Fable's steps mostly
+chose the cost: its median step cost 8, and the most expensive, 527, was step 19,
+the one that rebuilt part of the house. Its all-at-once agents chose to reorganise more often than without the cost;
+the runs do not show why.
 
 ### 6.4 Failed tries and cost
 
@@ -523,10 +597,16 @@ but did not stop it. Opus kept its first refactoring and dropped the later ones 
 | Sonnet 5.5     | All at once     | 117   | 116   | 0               | 1             | 0             | 2845                  | $0.046       |
 | Opus 5.5       | Step by step    | 30    | 30    | 0               | 0             | 0             | 3307                  | $0.103       |
 | Opus 5.5       | All at once     | 30    | 29    | 1               | 0             | 0             | 7148                  | $0.178       |
+| Fable 5.2      | Step by step    | 34    | 30    | 4               | 0             | 0             | 1943                  | $0.133       |
+| Fable 5.2      | All at once     | 33    | 29    | 4               | 0             | 0             | 10260                 | $0.470       |
 | DeepSeek flash | Step by step    | 63    | 60    | 2               | 1             | 0             | 18459                 | $0.011       |
 | DeepSeek flash | All at once     | 63    | 58    | 0               | 5             | 0             | 19628                 | $0.012       |
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+Three times in this run, Fable failed a step three tries in a row with scripts wrapped in a code fence, at steps 6, 16
+and 17, and the chain stopped. Each time the three failed tries were deleted and the step was tried again with fresh
+agents. Those nine deleted tries cost $0.89 and are not in the table.
+
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices.
 
 ## 7. Run 5: cost, no reorganise
@@ -568,6 +648,15 @@ Opus 5.5:
 |            | 9     | Opus 5.5 | all at once from step 0  | 41             | 0.0026        | 13.39            | 34          |
 |            | 9     | Opus 5.5 | all at once from step 15 | 53             | 0.0026        | 12.86            | 20          |
 
+Fable 5.2:
+
+| Seed house | Chain | Model     | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
+| ---------- | ----- | --------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
+| 1          |       |           | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 13    | Fable 5.2 | after step 30            | 63             | 0.0026        | 11.80            | 6           |
+|            | 13    | Fable 5.2 | all at once from step 0  | 58             | 0.0026        | 11.95            | 10          |
+|            | 13    | Fable 5.2 | all at once from step 15 | 65             | 0.0026        | 11.79            | 8           |
+
 Every step's scores are in Appendix E.
 
 On the small grid, with hallways, a cost and no request to reorganise, houses built step by step ended worse than
@@ -575,7 +664,8 @@ planned ones. Run 5 sets the same conditions at 100 rooms. In Sonnet's chains th
 built step by step and the one built all at once from the seed ended with corridor rooms 67 against 67 in house 1 and 38 against 40 in house 3, and with
 walking distances within 0.15 of each other. In DeepSeek's chains, the house built step by step had fewer corridor
 rooms in house 1 and more in house 3. Opus's house built step by step ended with 65 corridor rooms, against 41 and 53
-for its houses built all at once from steps 0 and 15.
+for its houses built all at once from steps 0 and 15. Fable's house built step by step ended with 63 corridor rooms,
+against 58 and 65 for its houses built all at once from steps 0 and 15.
 
 ### 7.2 What the agents changed
 
@@ -585,12 +675,14 @@ for its houses built all at once from steps 0 and 15.
 | Sonnet 5.5     | All at once     | 58     | 2                          | 1                               | 0.8%                                         | 3.05                     |
 | Opus 5.5       | Step by step    | 30     | 0                          | 0                               | 0.0%                                         | 0.00                     |
 | Opus 5.5       | All at once     | 29     | 13                         | 2                               | 2.4%                                         | 6.24                     |
+| Fable 5.2      | Step by step    | 30     | 0                          | 0                               | 0.0%                                         | 0.00                     |
+| Fable 5.2      | All at once     | 29     | 0                          | 0                               | 0.0%                                         | 1.10                     |
 | DeepSeek flash | Step by step    | 60     | 31                         | 1                               | 1.3%                                         | 0.32                     |
 | DeepSeek flash | All at once     | 58     | 32                         | 1                               | 1.2%                                         | 6.33                     |
 
 No model refactored. Sonnet's steps removed no room, and two of its 58 all-at-once
 agents removed one each. No DeepSeek agent removed more than one room. Opus's steps removed no room, and no
-all-at-once agent removed more than two.
+all-at-once agent removed more than two. No Fable agent removed a room.
 
 ### 7.3 Why it happens
 
@@ -605,6 +697,9 @@ Opus, adding one room at a time, never built a hallway. Each new room got a door
 house ended with 65 corridor rooms, up from 42. When it added all the rooms at once it still built hallways,
 6.24 a time, and those houses ended with fewer corridor rooms.
 
+Fable, adding one room at a time, also did it the cheapest way, for a cost of 5 every time. When it added all the rooms
+at once it built only 1.10 hallways a time.
+
 ### 7.4 Failed tries and cost
 
 | Model          | Way of building | Tries | Valid | Script rejected | House invalid | Reply cut off | Output tokens per try | Cost per try |
@@ -613,16 +708,19 @@ house ended with 65 corridor rooms, up from 42. When it added all the rooms at o
 | Sonnet 5.5     | All at once     | 58    | 58    | 0               | 0             | 0             | 1800                  | $0.035       |
 | Opus 5.5       | Step by step    | 30    | 30    | 0               | 0             | 0             | 1206                  | $0.054       |
 | Opus 5.5       | All at once     | 31    | 29    | 2               | 0             | 0             | 5117                  | $0.131       |
+| Fable 5.2      | Step by step    | 30    | 30    | 0               | 0             | 0             | 937                   | $0.098       |
+| Fable 5.2      | All at once     | 31    | 29    | 0               | 2             | 0             | 1697                  | $0.125       |
 | DeepSeek flash | Step by step    | 60    | 60    | 0               | 0             | 0             | 8704                  | $0.005       |
 | DeepSeek flash | All at once     | 60    | 58    | 0               | 2             | 0             | 13127                 | $0.008       |
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices.
 
 ## 8. Limitations
 
-Each run has one chain per seed house and model, except Sonnet in run 2, which has two. DeepSeek covers only houses 1
-and 3, and so does Sonnet in run 5. Opus covers house 1, plus house 2 in run 1, and did not take part in run 2. Each
+Each run has one chain per seed house and model, except Sonnet in run 2 and Fable on house 1 in run 1, which have two.
+DeepSeek covers only houses 1 and 3, and so does Sonnet in run 5. Opus and Fable cover house 1, plus house 2 in run 1,
+and did not take part in run 2. Each
 model ran at one effort level, and GPT-6 Luna in one run only. DeepSeek ran through a separate adapter with a plain
 prompt and low thinking, not through Claude Code, so its chains cannot be compared with Sonnet's point by point.
 DeepSeek is also much slower than Sonnet: 92 seconds per agent on average against 18,
@@ -668,7 +766,27 @@ corridor rooms than the all-at-once houses. On house 1 neither Sonnet nor DeepSe
 - Run 5 (cost, no reorganise), house 1: no call refactored more than 2.4%. The incremental house ended with 65 corridor
   rooms against 41 and 53 for the all-at-once houses.
 
-4. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
+4. Fable 5.2 (medium effort). Its houses were good when an agent rebuilt the seed house early, and bad when none did.
+In run 1, house 2, its second step rebuilt the house, and the house built step by step ended level with the ones built
+all at once. In house 1, in both chains, no step rebuilt the house: it ended with 43 and 45 corridor rooms, against 0
+for the house built all at once from the seed. Its all-at-once agents rebuilt only houses still close to the seed, and
+from step 11 on they mostly kept the house as the steps did. Asked to reorganise, it refactored a few times, less often
+than Opus. A cost on every command made Sonnet stop refactoring and Opus refactor less; Fable's all-at-once agents
+refactored more often with the cost than without. Cost alone, without a request to reorganise, stopped all
+refactoring, as it did for every model.
+- Run 1 (no cost, no reorganise), house 1, chains 13 and 17: no step refactored more than 1% of the house. 14 and 11
+  of 29 all-at-once calls refactored 60–74%: 21 of the 22 from steps 0 to 10, and 4 of the 36 from step 11 on. The
+  incremental house ended with 43 and 45 corridor rooms, the all-at-once house from the seed with 0.
+- Run 1, house 2, chain 14: step 2 refactored 74% and the first two all-at-once calls 75% and 72%. No later call
+  refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 3 (no cost, reorganise), house 1: 3 of 30 steps (steps 1, 18 and 28: 63%, 38% and 25%) and 3 of 29 all-at-once
+  calls refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 4 (cost, reorganise), house 1: one step refactored, step 19 (27%), taking corridor rooms from 48 to 0. 14 of 29
+  all-at-once calls refactored, 26–41% each.
+- Run 5 (cost, no reorganise), house 1: no call removed a room. The incremental house ended with 63 corridor rooms
+  against 58 and 65 for the all-at-once houses.
+
+5. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
 planned ones. Run 5 has the same conditions at 100 rooms. With Sonnet the two houses showed no difference. With Opus,
 and with DeepSeek in one of its two houses, the house built step by step ended with more corridor rooms than the
 houses built all at once, as on the 5×5 grid. These are single chains: they show that the 5×5 result can happen at 100
@@ -696,6 +814,12 @@ has none.
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 10    | 2          | Opus 5.5       | after the step            | 42     | 0      | 0       | 0       | 1       | 1       | 1       |
 | 10    | 2          | Opus 5.5       | all at once from the step | 0      | 0      | 0       | 0       | 1       | 1       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 42     | 42     | 42      | 42      | 42      | 42      | 43      |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 42      | 42      | 42      | –       |
+| 14    | 2          | Fable 5.2      | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
+| 14    | 2          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
+| 17    | 1          | Fable 5.2      | after the step            | 42     | 42     | 44      | 44      | 44      | 44      | 45      |
+| 17    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 44      | 44      | 44      | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 42     | 42     | 43      | 44      | 0       | 0       | 0       |
 | 5     | 1          | DeepSeek flash | all at once from the step | 0      | 0      | 0       | 44      | 0       | 0       | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 14     | 15     | 15      | 19      | 19      | 0       | 0       |
@@ -717,6 +841,12 @@ has none.
 | 9     | 1          | Opus 5.5       | all at once from the step | 0.0026 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
 | 10    | 2          | Opus 5.5       | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
 | 10    | 2          | Opus 5.5       | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0.0000 | 0.0000 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
+| 14    | 2          | Fable 5.2      | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
+| 14    | 2          | Fable 5.2      | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
+| 17    | 1          | Fable 5.2      | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
+| 17    | 1          | Fable 5.2      | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0000  | 0.0054  | 0.0051  |
 | 5     | 1          | DeepSeek flash | all at once from the step | 0.0077 | 0.0000 | 0.0000  | 0.0026  | 0.0000  | 0.0051  | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0000  | 0.0026  |
@@ -738,6 +868,12 @@ has none.
 | 9     | 1          | Opus 5.5       | all at once from the step | 14.77  | 11.08  | 11.05   | 11.48   | 11.48   | 11.13   | –       |
 | 10    | 2          | Opus 5.5       | after the step            | 9.91   | 9.80   | 10.16   | 10.69   | 10.72   | 10.92   | 11.14   |
 | 10    | 2          | Opus 5.5       | all at once from the step | 11.14  | 11.14  | 11.20   | 11.71   | 11.43   | 11.30   | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 9.56   | 10.62  | 11.68   | 12.70   | 13.55   | 14.51   | 15.20   |
+| 13    | 1          | Fable 5.2      | all at once from the step | 10.26  | 12.95  | 11.02   | 15.21   | 15.30   | 15.46   | –       |
+| 14    | 2          | Fable 5.2      | after the step            | 9.91   | 9.80   | 10.16   | 10.64   | 10.72   | 10.91   | 11.14   |
+| 14    | 2          | Fable 5.2      | all at once from the step | 11.65  | 11.08  | 13.76   | 11.12   | 11.48   | 11.49   | –       |
+| 17    | 1          | Fable 5.2      | after the step            | 9.56   | 10.62  | 11.76   | 13.31   | 14.97   | 16.27   | 17.16   |
+| 17    | 1          | Fable 5.2      | all at once from the step | 11.05  | 11.26  | 11.04   | 17.04   | 17.31   | 18.09   | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 9.56   | 10.35  | 11.05   | 11.97   | 11.21   | 11.31   | 11.38   |
 | 5     | 1          | DeepSeek flash | all at once from the step | 11.34  | 18.74  | 11.70   | 14.91   | 11.49   | 11.43   | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 7.96   | 8.46   | 9.00    | 9.36    | 9.62    | 15.00   | 18.70   |
@@ -759,6 +895,12 @@ has none.
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 2      | 6       | 0       | 0       | 8       | –       |
 | 10    | 2          | Opus 5.5       | after the step            | 12     | 2      | 4       | 2       | 6       | 10      | 8       |
 | 10    | 2          | Opus 5.5       | all at once from the step | 0      | 2      | 4       | 4       | 0       | 12      | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 8      | 12     | 16      | 20      | 24      | 26      | 30      |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 2      | 0       | 32      | 32      | 30      | –       |
+| 14    | 2          | Fable 5.2      | after the step            | 12     | 2      | 4       | 4       | 6       | 8       | 10      |
+| 14    | 2          | Fable 5.2      | all at once from the step | 2      | 2      | 4       | 8       | 2       | 18      | –       |
+| 17    | 1          | Fable 5.2      | after the step            | 8      | 12     | 16      | 24      | 32      | 38      | 36      |
+| 17    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 38      | 40      | 34      | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 8      | 14     | 16      | 16      | 26      | 28      | 22      |
 | 5     | 1          | DeepSeek flash | all at once from the step | 0      | 0      | 0       | 26      | 14      | 22      | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 16     | 16     | 18      | 16      | 18      | 0       | 0       |
@@ -902,6 +1044,8 @@ As in Appendix A.
 | 4     | 4          | Sonnet 5.5     | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
 | 5     | 1          | DeepSeek flash | all at once from the step | 42     | 0      | 0       | 0       | 0       | 0       | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 14     | 0      | 0       | 0       | 0       | 0       | 0       |
@@ -921,6 +1065,8 @@ As in Appendix A.
 | 4     | 4          | Sonnet 5.5     | all at once from the step | 0.0077 | 0.0026 | 0.0000  | 0.0077  | 0.0077  | 0.0000  | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0.0026 | 0.0077 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0026  | 0.0000  | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 0.0037 | 0.0000 | 0.0064  | 0.0030  | 0.3892  | 0.0000  | 0.0077  |
 | 5     | 1          | DeepSeek flash | all at once from the step | 0.0026 | 0.0000 | 0.0000  | 0.0000  | 0.0077  | 0.0026  | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 0.0074 | 0.0034 | 0.2628  | 0.0000  | 0.0000  | 0.0000  | 0.0026  |
@@ -940,6 +1086,8 @@ As in Appendix A.
 | 4     | 4          | Sonnet 5.5     | all at once from the step | 11.65  | 14.89  | 17.79   | 11.72   | 11.11   | 11.28   | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 9.56   | 9.78   | 9.96    | 11.75   | 10.75   | 10.84   | 11.06   |
 | 9     | 1          | Opus 5.5       | all at once from the step | 14.77  | 11.19  | 11.10   | 10.29   | 11.14   | 11.19   | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 9.56   | 9.80   | 10.23   | 10.61   | 10.47   | 13.74   | 11.07   |
+| 13    | 1          | Fable 5.2      | all at once from the step | 11.05  | 11.07  | 11.75   | 11.75   | 11.14   | 14.08   | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 9.56   | 15.72  | 11.18   | 15.93   | 16.06   | 18.74   | 14.88   |
 | 5     | 1          | DeepSeek flash | all at once from the step | 15.06  | 16.55  | 18.64   | 18.63   | 17.59   | 17.13   | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 7.96   | 16.57  | 11.68   | 18.77   | 18.78   | 18.77   | 17.59   |
@@ -959,6 +1107,8 @@ As in Appendix A.
 | 4     | 4          | Sonnet 5.5     | all at once from the step | 2      | 0      | 24      | 2       | 12      | 4       | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 8      | 2      | 0       | 0       | 0       | 0       | 0       |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 8      | 2      | 0       | 2       | 0       | 0       | 2       |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 2      | 2       | 2       | 0       | 0       | –       |
 | 5     | 1          | DeepSeek flash | after the step            | 8      | 0      | 0       | 48      | 0       | 0       | 0       |
 | 5     | 1          | DeepSeek flash | all at once from the step | 28     | 0      | 0       | 0       | 0       | 0       | –       |
 | 7     | 3          | DeepSeek flash | after the step            | 16     | 0      | 0       | 0       | 0       | 0       | 0       |
@@ -982,6 +1132,8 @@ As in Appendix A.
 | 8     | 4          | Sonnet 5.5     | all at once from the step | 13     | 18     | 20      | 24      | 27      | 33      | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 42     | 45     | 46      | 47      | 0       | 0       | 0       |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 0       | 47      | 0       | 0       | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
 | 1     | 1          | DeepSeek flash | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 14     | 0      | 0       | 0       | 0       | 0       | 0       |
@@ -1001,6 +1153,8 @@ As in Appendix A.
 | 8     | 4          | Sonnet 5.5     | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0.0026 | 0.0026 | 0.0000  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 0.0037 | 0.0103 | 0.0000  | 0.0000  | 0.0028  | 0.0081  | 0.0077  |
 | 1     | 1          | DeepSeek flash | all at once from the step | 0.0077 | 0.0077 | 0.0077  | 0.0000  | 0.0026  | 0.0077  | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 0.0074 | 0.0034 | 0.0032  | 0.0120  | 0.0085  | 0.0081  | 0.0102  |
@@ -1020,6 +1174,8 @@ As in Appendix A.
 | 8     | 4          | Sonnet 5.5     | all at once from the step | 10.53  | 9.95   | 10.24   | 10.53   | 9.28    | 8.74    | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 9.56   | 9.80   | 10.22   | 10.61   | 11.57   | 12.78   | 14.20   |
 | 9     | 1          | Opus 5.5       | all at once from the step | 13.76  | 11.08  | 13.21   | 11.08   | 14.36   | 11.59   | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 9.56   | 9.98   | 9.72    | 10.16   | 12.32   | 12.91   | 13.05   |
+| 13    | 1          | Fable 5.2      | all at once from the step | 13.89  | 13.16  | 11.50   | 11.82   | 12.76   | 13.55   | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 9.56   | 13.11  | 14.37   | 10.73   | 14.33   | 17.66   | 17.02   |
 | 1     | 1          | DeepSeek flash | all at once from the step | 11.73  | 17.01  | 12.42   | 12.01   | 15.28   | 15.04   | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 7.96   | 16.02  | 15.50   | 15.78   | 10.81   | 16.85   | 12.87   |
@@ -1039,6 +1195,8 @@ As in Appendix A.
 | 8     | 4          | Sonnet 5.5     | all at once from the step | 30     | 6      | 24      | 22      | 14      | 4       | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 8      | 2      | 0       | 2       | 4       | 4       | 0       |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0      | 2      | 2       | 6       | 0       | 8       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 8      | 10     | 12      | 14      | 14      | 12      | 8       |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0      | 0      | 6       | 26      | 12      | 16      | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 8      | 2      | 28      | 0       | 0       | 2       | 58      |
 | 1     | 1          | DeepSeek flash | all at once from the step | 0      | 8      | 0       | 0       | 6       | 2       | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 16     | 2      | 6       | 0       | 0       | 14      | 12      |
@@ -1058,6 +1216,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5     | all at once from the step | 40     | 27     | 41      | 41      | 39      | 40      | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 42     | 46     | 50      | 55      | 59      | 61      | 65      |
 | 9     | 1          | Opus 5.5       | all at once from the step | 41     | 45     | 65      | 53      | 64      | 64      | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 42     | 46     | 49      | 53      | 57      | 60      | 63      |
+| 13    | 1          | Fable 5.2      | all at once from the step | 58     | 66     | 63      | 65      | 64      | 63      | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 42     | 44     | 47      | 50      | 49      | 49      | 51      |
 | 1     | 1          | DeepSeek flash | all at once from the step | 63     | 69     | 47      | 65      | 57      | 49      | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 14     | 15     | 17      | 28      | 31      | 38      | 40      |
@@ -1073,6 +1233,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5     | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
 | 9     | 1          | Opus 5.5       | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
+| 13    | 1          | Fable 5.2      | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
 | 1     | 1          | DeepSeek flash | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0054  | 0.0051  |
@@ -1088,6 +1250,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5     | all at once from the step | 8.95   | 10.15  | 8.80    | 8.86    | 8.91    | 8.87    | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 9.56   | 9.93   | 10.29   | 10.85   | 11.26   | 11.59   | 11.93   |
 | 9     | 1          | Opus 5.5       | all at once from the step | 13.39  | 14.30  | 11.59   | 12.86   | 12.00   | 12.06   | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 9.56   | 10.01  | 10.47   | 10.78   | 11.07   | 11.49   | 11.80   |
+| 13    | 1          | Fable 5.2      | all at once from the step | 11.95  | 11.81  | 11.85   | 11.79   | 11.87   | 11.69   | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 9.56   | 10.23  | 11.05   | 11.51   | 11.97   | 12.49   | 12.92   |
 | 1     | 1          | DeepSeek flash | all at once from the step | 13.32  | 12.36  | 13.77   | 14.13   | 12.72   | 12.89   | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 7.96   | 8.32   | 8.67    | 10.65   | 11.06   | 11.20   | 11.53   |
@@ -1103,6 +1267,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5     | all at once from the step | 18     | 16     | 8       | 16      | 4       | 2       | –       |
 | 9     | 1          | Opus 5.5       | after the step            | 8      | 10     | 8       | 10      | 6       | 6       | 6       |
 | 9     | 1          | Opus 5.5       | all at once from the step | 34     | 10     | 10      | 20      | 4       | 4       | –       |
+| 13    | 1          | Fable 5.2      | after the step            | 8      | 8      | 8       | 8       | 6       | 8       | 6       |
+| 13    | 1          | Fable 5.2      | all at once from the step | 10     | 6      | 6       | 8       | 6       | 8       | –       |
 | 1     | 1          | DeepSeek flash | after the step            | 8      | 10     | 14      | 14      | 14      | 16      | 14      |
 | 1     | 1          | DeepSeek flash | all at once from the step | 24     | 10     | 30      | 34      | 12      | 22      | –       |
 | 3     | 3          | DeepSeek flash | after the step            | 16     | 12     | 18      | 16      | 14      | 16      | 10      |

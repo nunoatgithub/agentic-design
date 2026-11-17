@@ -11,18 +11,22 @@ grown to 100, either one room at a time or all the remaining rooms at once. Ther
 runs: with hallways, without hallways, with a request to reorganise the house before adding to it, with that request
 and a cost on every command, and with the cost alone.
 
-Claude Sonnet 5.5 refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring
-and only added rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more
-than Sonnet, both step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not
-stop refactoring. Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked
-to reorganise, it kept refactoring as the house grew. With a cost on every command as well, it went back to
-refactoring once. With the cost and no request to reorganise, it did not refactor at all. GPT-6 Luna, in the run
-without hallways, refactored the badly grown houses without being asked. Refactoring was not the same as improving.
+Claude Sonnet 5.5 refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring and
+only added rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more than
+Sonnet, both step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not stop
+refactoring. Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked to
+reorganise, it kept refactoring as the house grew. With a cost on every command as well, it went back to refactoring
+once. With the cost and no request to reorganise, it did not refactor at all. Claude Fable 5.2, left to itself, rebuilt
+one of its two houses early; in the other, no agent adding one room rebuilt it, and the agents adding all the rooms at
+once rebuilt it only while it was still close to the seed. Asked to reorganise, Fable refactored a few times. With a
+cost on every command as well, its all-at-once agents refactored more often, not less. With the cost alone it did not
+refactor. GPT-6 Luna, in the run without hallways, refactored the badly grown houses without being asked. Refactoring
+was not the same as improving.
 
-In most runs it made no clear difference whether the rooms were added one at a time or all at once. The exception was
-the run with a cost and no request to reorganise, the same conditions in which the small grid showed a difference. In
-that run, Opus's house and one of DeepSeek's two ended with more corridor rooms when built one room at a time than when
-built all at once. Sonnet's houses did not.
+In most runs it made no clear difference whether the rooms were added one at a time or all at once. The exceptions were
+one of Fable's two houses in run 1, and the run with a cost and no request to reorganise, the same conditions in which
+the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended with more corridor rooms
+when built one room at a time than when built all at once. Sonnet's houses did not.
 
 [Watch the videos](viewer/videos/watch.md) of the houses growing. They were recorded in [the viewer](viewer/README.md),
 and the viewer plays every chain of this report step by step.
@@ -68,6 +72,8 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
     in run 4 ({{r4_s_versions}}); and two in run 5, houses 1 and 3 ({{r5_s_versions}}).
   - Claude Opus 5.5 at medium effort, through Claude Code: two chains in run 1, houses 1 and 2, and one in each of
     runs 3, 4 and 5, house 1 ({{o_versions}}).
+  - Claude Fable 5.2 at medium effort, through Claude Code ({{f_versions}}): three chains in run 1, two on house 1 and
+    one on house 2, and one in each of runs 3, 4 and 5, house 1.
   - DeepSeek flash (DeepSeek-V4.1-Flash-1017) at low thinking, through a separate adapter (version
     {{r3_adapter_version}}): two chains, houses 1 and 3, in each of runs 1, 3, 4 and 5.
   - GPT-6 Luna at medium effort: four chains in run 2, one per seed house ({{r2_l_version}}).
@@ -95,13 +101,19 @@ Opus 5.5:
 
 {{r1_final_opus}}
 
+Fable 5.2:
+
+{{r1_final_fable}}
+
 We expected the house built step by step to end no worse than the one built all at once from the seed, as on the small
 grid. For Sonnet it ended worse on one score, corridor rooms: in every house, the house built step by step had more
 rooms that people must walk through, while the one built all at once kept about as many as the seed had. On the other
 scores, building step by step mostly did better: its houses were shorter to walk in all four houses and more compact
 in {{r1_compact_better}} of the four, and privacy order was the same either way. Built step by step or all at once
-from the seed, DeepSeek's and Opus's houses ended with no corridor rooms, or one at most. Every step's scores are in
-Appendix A.
+from the seed, DeepSeek's and Opus's houses ended with no corridor rooms, or one at most. Fable's depended on the house.
+In house 2 they ended with no corridor rooms, built either way. In house 1, in both chains, the house built step by
+step ended with {{r1_f_corr}} corridor rooms, against none for the house built all at once from the seed, and the house
+built all at once from step 15 ended with {{r1_f_corr15}}. Every step's scores are in Appendix A.
 
 ### 3.2 What the agents changed
 
@@ -120,6 +132,12 @@ Opus refactored once, at the start. In each house its first step and its first a
 65% and 77% of the house, and no later agent refactored. It added {{r1_o_step_hall}} hallways per step and
 {{r1_o_all_hall}} per all-at-once agent.
 
+Fable refactored in house 2 the way Opus did: its second step removed 74% of the house, its first two all-at-once
+agents 75% and 72%, and no later agent refactored. In house 1, in both chains, no step removed more than 1% of the
+house. Its all-at-once agents did refactor, removing 60–74% of the house each time, but only while the house was close
+to the seed: {{r1_f_all_early}} of those working from steps 0 to 10 refactored, and {{r1_f_all_late}} of those working
+from step 11 on.
+
 ### 3.3 Why it happens
 
 Working all at once, Sonnet saw every missing room, so it could lay out hallways to serve them all. It built them as a
@@ -135,13 +153,19 @@ walk through.
 
 Opus laid the house out again with its first agent of each kind, then kept that layout and added each new room to it.
 
+Fable did the same in house 2, with its second step. In house 1 its steps worked as Sonnet's did: each kept the house
+and gave the new room a door into a room already there, so the seed's corridor rooms stayed and a few more were added.
+Its all-at-once agents rebuilt the house while it was still close to the seed; once the steps had grown it further,
+they mostly kept it and added to it, and those houses ended with as many corridor rooms as the steps' houses.
+
 ### 3.4 Failed tries and cost
 
 {{r1_tries}}
 
 When an agent failed, a fresh one tried again, and every step was done within three tries, so every chain has all 59
-houses. The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's
-published prices.
+houses. Most of Fable's failed tries, in this run and the others, were scripts wrapped in a Markdown code fence (```),
+which the server does not read as commands. The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek
+costs are worked out from DeepSeek's published prices.
 
 ## 4. Run 2: no hallway can be built
 
@@ -222,6 +246,10 @@ Opus 5.5:
 
 {{r3_final_opus}}
 
+Fable 5.2:
+
+{{r3_final_fable}}
+
 The house built all at once from {{r3_missing}} is missing: all three tries were rejected, and the chain carried on
 without it. Every step's scores are in Appendix C.
 
@@ -236,22 +264,23 @@ The request changed what the agents did. The first steps removed most of the see
 {{r3_step30_zero}} of the six houses built step by step ended with no corridor rooms. One all-at-once agent working
 from the seed did not rebuild: it kept the seed house, added a wing, and so kept the seed's corridor rooms. Of the six
 houses built all at once from the seed, {{r3_all00_zero}} ended with none. Since both kinds of agent rebuilt, corridor
-rooms no longer told the two ways of building apart. Only the length of the walk still differed. Opus's houses all
-ended with no corridor rooms.
+rooms no longer told the two ways of building apart. Only the length of the walk still differed. Opus's and Fable's
+houses all ended with no corridor rooms.
 
 ### 5.2 What the agents changed
 
 {{r3_changes}}
 
-The table adds up every chain of a model: four seed houses for Sonnet, two for DeepSeek and one for Opus, so its rows
-do not compare like with like. It also counts every agent that removed a room, even a single one, while an agent
-refactored only when it removed or replaced 10% or more of the house.
+The table adds up every chain of a model: four seed houses for Sonnet, two for DeepSeek and one each for Opus and Fable,
+so its rows do not compare like with like. It also counts every agent that removed a room, even a single one, while an
+agent refactored only when it removed or replaced 10% or more of the house.
 
-House 1 is the one all three models built, and there the difference is clear. Sonnet refactored at the start and then
+House 1 is the one all four models built, and there the difference is clear. Sonnet refactored at the start and then
 mostly kept what it had: {{r3_s1_steps_big}} step refactored, the first, and {{r3_s1_all_big}} all-at-once agents, the
 first and the one from step 21. DeepSeek refactored in {{r3_d1_steps_big}} of its 30 steps and {{r3_d1_all_big}} of
 its all-at-once agents. Opus came in between: {{r3_o_steps_big}} of its 30 steps and {{r3_o_all_big}} of its 29
-all-at-once agents refactored.
+all-at-once agents refactored. Fable refactored less often than Opus: 3 of its 30 steps, at steps 1, 18 and 28, and 3
+of its 29 all-at-once agents.
 
 On the other seed houses Sonnet's steps also refactored mostly at the start, with one exception: in house 4 the first
 step changed only 11% of the house, and step 15 laid out 81% of it again. Two later steps, in houses 2 and 3, changed
@@ -269,13 +298,14 @@ made the agents rebuild, and where it failed, it failed for a single agent, not 
 same as improving.
 
 Opus reorganised at intervals: each step that laid the house out again (steps {{r3_o_big_steps}}) was followed by
-steps that changed less than 10% of it.
+steps that changed less than 10% of it. Fable rebuilt the house at its first step, removing 63% of it, and twice more,
+at steps 18 and 28, removing 38% and 25%.
 
 ### 5.4 Failed tries and cost
 
 {{r3_tries}}
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices. In run 3, building and demolishing cost nothing.
 
 ## 6. Run 4: reorganise, with cost
@@ -294,13 +324,18 @@ Opus 5.5:
 
 {{r4_final_opus}}
 
+Fable 5.2:
+
+{{r4_final_fable}}
+
 Every step's scores are in Appendix D.
 
 In the Sonnet chains, building step by step mostly ended with more corridor rooms but a shorter walk. The house built
 step by step had more corridor rooms than the one built all at once from the seed in {{r4_s_corr_higher}} of the four
 houses, and fewer in {{r4_s_corr_lower}}. It was shorter to walk in {{r4_s_walk_lower}}, and longer in
 {{r4_s_walk_higher}}. DeepSeek's houses, built either way, ended with no corridor rooms, and those built step by step
-were longer to walk. Opus's houses all ended with no corridor rooms.
+were longer to walk. Opus's houses all ended with no corridor rooms. Fable's house built step by step and the one built
+all at once from the seed ended with none, and the one built all at once from step 15 with 47.
 
 ### 6.2 What the agents changed
 
@@ -318,6 +353,10 @@ refactored in {{r4_d_steps_big}} of the 30 steps in each house, against {{r3_d_s
 Opus refactored once: its first step removed 39% of the house and its first all-at-once agent 36%, and no later agent
 refactored. In run 3, without the cost, {{r3_o_steps_big}} of its steps did.
 
+Fable refactored more with the cost than without when it added all the rooms at once: 14 of its 29 all-at-once agents
+refactored, removing 26–41% of the house each, against 3 in run 3. Step by step it refactored once, at step 19: that
+step removed 27% of the house and took its corridor rooms from 48 to 0.
+
 ### 6.3 Why it happens
 
 The prompt asks for two things: reorganise the house, and keep the total cost of the script low. Refactoring means
@@ -325,13 +364,20 @@ removing rooms and building them again, and every one of those commands costs so
 median step cost {{r4_s_step_cost}}, the new room and one door, and none cost more than {{r4_s_step_cost_max}}. It
 only added to the house, as in run 1, where nobody asked it to reorganise. DeepSeek chose to reorganise: its median
 step cost {{r4_d_step_cost}}, and one cost {{r4_d_step_cost_max}}. The cost made it refactor less often than in run 3,
-but did not stop it. Opus kept its first refactoring and dropped the later ones it made in run 3.
+but did not stop it. Opus kept its first refactoring and dropped the later ones it made in run 3. Fable's steps mostly
+chose the cost: its median step cost {{r4_f_step_cost}}, and the most expensive, {{r4_f_step_cost_max}}, was step 19,
+the one that rebuilt part of the house. Its all-at-once agents chose to reorganise more often than without the cost;
+the runs do not show why.
 
 ### 6.4 Failed tries and cost
 
 {{r4_tries}}
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+Three times in this run, Fable failed a step three tries in a row with scripts wrapped in a code fence, at steps 6, 16
+and 17, and the chain stopped. Each time the three failed tries were deleted and the step was tried again with fresh
+agents. Those nine deleted tries cost $0.89 and are not in the table.
+
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices.
 
 ## 7. Run 5: cost, no reorganise
@@ -350,6 +396,10 @@ Opus 5.5:
 
 {{r5_final_opus}}
 
+Fable 5.2:
+
+{{r5_final_fable}}
+
 Every step's scores are in Appendix E.
 
 On the small grid, with hallways, a cost and no request to reorganise, houses built step by step ended worse than
@@ -357,7 +407,8 @@ planned ones. Run 5 sets the same conditions at 100 rooms. In Sonnet's chains th
 built step by step and the one built all at once from the seed ended with corridor rooms {{r5_s_pairs}}, and with
 walking distances within 0.15 of each other. In DeepSeek's chains, the house built step by step had fewer corridor
 rooms in house 1 and more in house 3. Opus's house built step by step ended with 65 corridor rooms, against 41 and 53
-for its houses built all at once from steps 0 and 15.
+for its houses built all at once from steps 0 and 15. Fable's house built step by step ended with 63 corridor rooms,
+against 58 and 65 for its houses built all at once from steps 0 and 15.
 
 ### 7.2 What the agents changed
 
@@ -365,7 +416,7 @@ for its houses built all at once from steps 0 and 15.
 
 No model refactored. Sonnet's steps removed no room, and {{r5_s_all_removed}} of its {{r5_s_all_calls}} all-at-once
 agents removed one each. No DeepSeek agent removed more than one room. Opus's steps removed no room, and no
-all-at-once agent removed more than two.
+all-at-once agent removed more than two. No Fable agent removed a room.
 
 ### 7.3 Why it happens
 
@@ -380,17 +431,21 @@ Opus, adding one room at a time, never built a hallway. Each new room got a door
 house ended with 65 corridor rooms, up from 42. When it added all the rooms at once it still built hallways,
 {{r5_o_all_hall}} a time, and those houses ended with fewer corridor rooms.
 
+Fable, adding one room at a time, also did it the cheapest way, for a cost of 5 every time. When it added all the rooms
+at once it built only {{r5_f_all_hall}} hallways a time.
+
 ### 7.4 Failed tries and cost
 
 {{r5_tries}}
 
-The Sonnet and Opus costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
+The Sonnet, Opus and Fable costs are Claude Code's figures; the DeepSeek costs are worked out from DeepSeek's published
 prices.
 
 ## 8. Limitations
 
-Each run has one chain per seed house and model, except Sonnet in run 2, which has two. DeepSeek covers only houses 1
-and 3, and so does Sonnet in run 5. Opus covers house 1, plus house 2 in run 1, and did not take part in run 2. Each
+Each run has one chain per seed house and model, except Sonnet in run 2 and Fable on house 1 in run 1, which have two.
+DeepSeek covers only houses 1 and 3, and so does Sonnet in run 5. Opus and Fable cover house 1, plus house 2 in run 1,
+and did not take part in run 2. Each
 model ran at one effort level, and GPT-6 Luna in one run only. DeepSeek ran through a separate adapter with a plain
 prompt and low thinking, not through Claude Code, so its chains cannot be compared with Sonnet's point by point.
 DeepSeek is also much slower than Sonnet: {{call_s_deepseek}} seconds per agent on average against {{call_s_sonnet}},
@@ -436,7 +491,27 @@ corridor rooms than the all-at-once houses. On house 1 neither Sonnet nor DeepSe
 - Run 5 (cost, no reorganise), house 1: no call refactored more than 2.4%. The incremental house ended with 65 corridor
   rooms against 41 and 53 for the all-at-once houses.
 
-4. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
+4. Fable 5.2 (medium effort). Its houses were good when an agent rebuilt the seed house early, and bad when none did.
+In run 1, house 2, its second step rebuilt the house, and the house built step by step ended level with the ones built
+all at once. In house 1, in both chains, no step rebuilt the house: it ended with 43 and 45 corridor rooms, against 0
+for the house built all at once from the seed. Its all-at-once agents rebuilt only houses still close to the seed, and
+from step 11 on they mostly kept the house as the steps did. Asked to reorganise, it refactored a few times, less often
+than Opus. A cost on every command made Sonnet stop refactoring and Opus refactor less; Fable's all-at-once agents
+refactored more often with the cost than without. Cost alone, without a request to reorganise, stopped all
+refactoring, as it did for every model.
+- Run 1 (no cost, no reorganise), house 1, chains 13 and 17: no step refactored more than 1% of the house. 14 and 11
+  of 29 all-at-once calls refactored 60–74%: 21 of the 22 from steps 0 to 10, and 4 of the 36 from step 11 on. The
+  incremental house ended with 43 and 45 corridor rooms, the all-at-once house from the seed with 0.
+- Run 1, house 2, chain 14: step 2 refactored 74% and the first two all-at-once calls 75% and 72%. No later call
+  refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 3 (no cost, reorganise), house 1: 3 of 30 steps (steps 1, 18 and 28: 63%, 38% and 25%) and 3 of 29 all-at-once
+  calls refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 4 (cost, reorganise), house 1: one step refactored, step 19 (27%), taking corridor rooms from 48 to 0. 14 of 29
+  all-at-once calls refactored, 26–41% each.
+- Run 5 (cost, no reorganise), house 1: no call removed a room. The incremental house ended with 63 corridor rooms
+  against 58 and 65 for the all-at-once houses.
+
+5. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
 planned ones. Run 5 has the same conditions at 100 rooms. With Sonnet the two houses showed no difference. With Opus,
 and with DeepSeek in one of its two houses, the house built step by step ended with more corridor rooms than the
 houses built all at once, as on the 5×5 grid. These are single chains: they show that the 5×5 result can happen at 100

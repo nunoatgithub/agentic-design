@@ -26,7 +26,8 @@ CACHE = ROOT / "paper" / ".report_cache"     # what each call's layout gives the
 SCORES = ("corridor_rooms", "privacy_order", "walking_distance", "compactness")
 NAMES = ("Corridor rooms", "Privacy order", "Walking distance", "Compactness")
 DIGITS = {"corridor_rooms": 0, "privacy_order": 4, "walking_distance": 2, "compactness": 0}
-MODELS = {"sonnet55": "Sonnet 5.5", "opus55": "Opus 5.5", "gpt6luna": "GPT-6 Luna", "deepseekflash": "DeepSeek flash"}
+MODELS = {"sonnet55": "Sonnet 5.5", "opus55": "Opus 5.5", "fable52": "Fable 5.2", "gpt6luna": "GPT-6 Luna",
+          "deepseekflash": "DeepSeek flash"}
 KINDS = (("step", "Step by step"), ("all", "All at once"))
 LABEL = re.compile(r"^(\w+)-(\w+)-h(\d+)-c(\d+)-(step|all)(\d+)$")
 ALONG = (0, 5, 10, 15, 20, 25, 30)          # the steps the along-the-chain tables show
@@ -73,7 +74,8 @@ class Run:
 
     def __init__(self, folder):
         self.folder = folder
-        self.records = [json.loads(p.read_text()) for p in sorted((ROOT / folder).glob("run_*.json"))]
+        records = (json.loads(p.read_text()) for p in sorted((ROOT / folder).glob("run_*.json")))
+        self.records = [r for r in records if LABEL.match(r["label"])[1] in MODELS]   # a model the report does not cover is left out
         self.seeds = {h: parse_layout((ROOT / folder / "seeds" / ("house%d.txt" % h)).read_text()) for h in range(1, 5)}
         self.calls = defaultdict(dict)       # (model, house, chain) -> {(kind, step): the valid record}
         for r in self.records:
@@ -271,8 +273,9 @@ assert all(len(r1.calls[c]) == 59 for c in S1 + D1), "every run 1 chain has all 
 T["r1_final"] = final_table(r1, ["sonnet55"])
 T["r1_final_deepseek"] = final_table(r1, ["deepseekflash"])
 T["r1_final_opus"] = final_table(r1, ["opus55"])
-T["r1_changes"] = change_table(r1, ["sonnet55", "opus55", "deepseekflash"], hallways=True)
-T["r1_tries"] = tries_table(r1, ["sonnet55", "opus55", "deepseekflash"])
+T["r1_final_fable"] = final_table(r1, ["fable52"])
+T["r1_changes"] = change_table(r1, ["sonnet55", "opus55", "fable52", "deepseekflash"], hallways=True)
+T["r1_tries"] = tries_table(r1, ["sonnet55", "opus55", "fable52", "deepseekflash"])
 T["r1_along"] = along_tables(r1)
 seed_sc = {h: r1.seed_score(h) for h in range(1, 5)}
 step30 = {c[1]: r1.scores(c, "step", 30) for c in S1}
@@ -396,8 +399,9 @@ T["r3_missing"] = "step %d in %s" % (missing3[0][1][1], chain_name(missing3[0][0
 T["r3_final_sonnet"] = final_table(r3, ["sonnet55"])
 T["r3_final_deepseek"] = final_table(r3, ["deepseekflash"])
 T["r3_final_opus"] = final_table(r3, ["opus55"])
-T["r3_changes"] = change_table(r3, ["sonnet55", "opus55", "deepseekflash"], hallways=True)
-T["r3_tries"] = tries_table(r3, ["sonnet55", "opus55", "deepseekflash"])
+T["r3_final_fable"] = final_table(r3, ["fable52"])
+T["r3_changes"] = change_table(r3, ["sonnet55", "opus55", "fable52", "deepseekflash"], hallways=True)
+T["r3_tries"] = tries_table(r3, ["sonnet55", "opus55", "fable52", "deepseekflash"])
 T["r3_along"] = along_tables(r3)
 
 pairs3 = [(c, r3.scores(c, "step", 30), r3.scores(c, "all", 0)) for c in S3 + D3]
@@ -468,8 +472,9 @@ assert complete(r4, S4 + D4), "every run 4 chain has all 59 houses"
 T["r4_final_sonnet"] = final_table(r4, ["sonnet55"])
 T["r4_final_deepseek"] = final_table(r4, ["deepseekflash"])
 T["r4_final_opus"] = final_table(r4, ["opus55"])
-T["r4_changes"] = change_table(r4, ["sonnet55", "opus55", "deepseekflash"], hallways=True)
-T["r4_tries"] = tries_table(r4, ["sonnet55", "opus55", "deepseekflash"])
+T["r4_final_fable"] = final_table(r4, ["fable52"])
+T["r4_changes"] = change_table(r4, ["sonnet55", "opus55", "fable52", "deepseekflash"], hallways=True)
+T["r4_tries"] = tries_table(r4, ["sonnet55", "opus55", "fable52", "deepseekflash"])
 T["r4_along"] = along_tables(r4)
 pair_counts(r4, S4, "r4_s")
 assert (T["r4_s_corr_lower"], T["r4_s_corr_higher"]) == ("one", "three"), "run 4: Sonnet step 30 had fewer corridor rooms in one house, more in three"
@@ -507,8 +512,9 @@ assert complete(r5, S5 + D5), "every run 5 chain has all 59 houses"
 T["r5_final_sonnet"] = final_table(r5, ["sonnet55"])
 T["r5_final_deepseek"] = final_table(r5, ["deepseekflash"])
 T["r5_final_opus"] = final_table(r5, ["opus55"])
-T["r5_changes"] = change_table(r5, ["sonnet55", "opus55", "deepseekflash"], hallways=True)
-T["r5_tries"] = tries_table(r5, ["sonnet55", "opus55", "deepseekflash"])
+T["r5_final_fable"] = final_table(r5, ["fable52"])
+T["r5_changes"] = change_table(r5, ["sonnet55", "opus55", "fable52", "deepseekflash"], hallways=True)
+T["r5_tries"] = tries_table(r5, ["sonnet55", "opus55", "fable52", "deepseekflash"])
 T["r5_along"] = along_tables(r5)
 s5_pairs = [(c, r5.scores(c, "step", 30), r5.scores(c, "all", 0)) for c in S5]
 assert all(abs(a["corridor_rooms"] - b["corridor_rooms"]) <= 2 and abs(a["walking_distance"] - b["walking_distance"]) < 0.15
@@ -649,6 +655,66 @@ d5_worse = [r5.scores(c, "step", 30)["corridor_rooms"] > r5.scores(c, "all", 0)[
 assert sorted(d5_worse) == [False, True], "abstract: one of the two DeepSeek houses built step by step in run 5 ended with more corridor rooms"
 assert all(r5.scores(c, "step", 30)["corridor_rooms"] <= r5.scores(c, "all", 0)["corridor_rooms"] for c in S5), \
     "abstract: the Sonnet houses built step by step in run 5 ended no worse"
+
+# ---- Fable: every figure the run sections and the conclusion give
+F1 = sorted((c for c in r1.chains if c[0] == "fable52"), key=lambda c: (c[1], c[2]))
+F3, F4, F5 = ([c for c in run.chains if c[0] == "fable52"] for run in (r3, r4, r5))
+assert [(c[1], c[2]) for c in F1] == [(1, 13), (1, 17), (2, 14)] and all([(c[1], c[2]) for c in F] == [(1, 13)] for F in (F3, F4, F5)), \
+    "Fable ran run 1 on house 1 (chains 13 and 17) and house 2 (chain 14), runs 3, 4 and 5 on house 1"
+assert complete(r1, F1) and complete(r3, F3) and complete(r4, F4) and complete(r5, F5), "every Fable chain has all 59 houses"
+
+
+def shares(run, chain):
+    """Per kind, (step, share of the house removed) for every call of the chain, in step order."""
+    return {kind: [(c[6], share(c)) for c in sorted(run.changes(chain[0], kind), key=lambda x: x[6]) if c[5] == chain]
+            for kind in ("step", "all")}
+
+
+def big(run, chain, kind):
+    return [(k, round(100 * v)) for k, v in shares(run, chain)[kind] if v >= 0.1]
+
+
+corr = lambda run, c: [run.scores(c, k, s)["corridor_rooms"] for k, s in (("step", 30), ("all", 0), ("all", 15))]
+f1h1 = [c for c in F1 if c[1] == 1]
+assert all(round(100 * max(v for _, v in shares(r1, c)["step"])) <= 1 for c in f1h1), "run 1, house 1: no Fable step removed more than 1% of the house"
+assert [len(big(r1, c, "all")) for c in f1h1] == [14, 11], "run 1, house 1: 14 and 11 Fable all-at-once calls refactored"
+assert all(60 <= v <= 74 for c in f1h1 for _, v in big(r1, c, "all")), "run 1, house 1: each Fable all-at-once refactoring removed 60-74%"
+early = [k for c in f1h1 for k, _ in big(r1, c, "all") if k <= 10]
+late = [k for c in f1h1 for k, _ in big(r1, c, "all") if k > 10]
+T["r1_f_all_early"], T["r1_f_all_late"] = "%d of 22" % len(early), "%d of 36" % len(late)
+assert (len(early), len(late)) == (21, 4), "run 1, house 1: Fable all-at-once calls from steps 0-10 nearly all refactored, later ones rarely"
+T["r1_f_corr"] = and_list(str(corr(r1, c)[0]) for c in f1h1)
+T["r1_f_corr15"] = and_list(str(corr(r1, c)[2]) for c in f1h1)
+assert all(corr(r1, c)[1] == 0 and corr(r1, c)[0] > 40 and corr(r1, c)[2] > 40 for c in f1h1), \
+    "run 1, house 1: Fable step 30 and all at once from step 15 kept over 40 corridor rooms, all at once from step 0 had none"
+f1h2 = [c for c in F1 if c[1] == 2][0]
+assert big(r1, f1h2, "step") == [(2, 74)] and big(r1, f1h2, "all") == [(0, 75), (1, 72)], \
+    "run 1, house 2: Fable refactored at step 2 (74%) and in the first two all-at-once calls (75%, 72%), never after"
+assert corr(r1, f1h2) == [0, 0, 0], "run 1, house 2: all the Fable final houses have 0 corridor rooms"
+assert big(r3, F3[0], "step") == [(1, 63), (18, 38), (28, 25)] and [k for k, _ in big(r3, F3[0], "all")] == [0, 4, 21], \
+    "run 3: Fable refactored at steps 1, 18 and 28, and in the all-at-once calls from steps 0, 4 and 21"
+assert corr(r3, F3[0]) == [0, 0, 0], "run 3: all the Fable final houses have 0 corridor rooms"
+assert big(r4, F4[0], "step") == [(19, 27)], "run 4: one Fable step refactored, step 19, removing 27%"
+assert [r4.scores(F4[0], "step", k)["corridor_rooms"] for k in (18, 19)] == [48, 0], "run 4: Fable's step 19 took corridor rooms from 48 to 0"
+f4_all = big(r4, F4[0], "all")
+assert len(f4_all) == 14 and all(26 <= v <= 41 for _, v in f4_all) and len(big(r3, F3[0], "all")) == 3, \
+    "run 4: 14 Fable all-at-once calls refactored, 26-41% each, against 3 in run 3"
+assert corr(r4, F4[0]) == [0, 0, 47], "run 4: Fable's houses after step 30 and from step 0 have 0 corridor rooms, from step 15 47"
+f4_cost = script_costs(r4, "fable52", "step")
+T["r4_f_step_cost"], T["r4_f_step_cost_max"] = "%g" % st.median(f4_cost), str(max(f4_cost))
+assert max(c[0] for kind, _ in KINDS for c in r5.changes("fable52", kind)) == 0, "run 5: no Fable call removed a room"
+assert set(script_costs(r5, "fable52", "step")) == {5}, "run 5: every Fable one-room script cost 5, a room and a door"
+T["r5_f_all_hall"] = "%.2f" % st.mean(c[2] for c in r5.changes("fable52", "all"))
+assert corr(r5, F5[0]) == [63, 58, 65], "run 5: Fable's corridor rooms 63 after step 30, 58 and 65 all at once from steps 0 and 15"
+assert max((r["cost"], k) for (kind, k), r in r4.calls[F4[0]].items() if kind == "step")[1] == 19, \
+    "run 4: Fable's most expensive step was step 19"
+assert len(big(r3, F3[0], "step")) < big3("opus55", "step") and len(big(r3, F3[0], "all")) < big3("opus55", "all"), \
+    "run 3: Fable refactored less often than Opus"
+assert all(corr(r1, c)[0] > r1.seed_score(1)["corridor_rooms"] for c in f1h1), "run 1, house 1: Fable's steps added corridor rooms to the seed's"
+f_failed = [r for run in (r1, r3, r4, r5) for r in run.records if r["label"].startswith("fable52") and not (r["accepted"] and r["valid"])]
+fenced = [r for r in f_failed if any(e.get("text", "").startswith("```") for e in r["errors"])]
+assert len(fenced) > len(f_failed) / 2, "most of Fable's failed tries were scripts wrapped in a code fence"
+T["f_versions"] = and_list(sorted({r["claude_code"].split()[0] for run in (r1, r3, r4, r5) for r in run.records if r["label"].startswith("fable52")}))
 
 
 def successive(run, model):
