@@ -41,6 +41,11 @@
   #trend text.big { font-size:12px; font-weight:700; }
   #trend path.hit { fill:none; stroke:transparent; stroke-width:10; pointer-events:stroke; }
   #trend.closed path.hit { pointer-events:none; } /* the closed panel must not catch hover on the drawing */
+  #trend rect.key-hit { fill:transparent; pointer-events:all; cursor:pointer; } /* only the legend entries catch clicks; the rest of the panel stays transparent to them */
+  #trend g.key line, #trend g.key text { pointer-events:none; }
+  #trend g.key.off { opacity:.35; } /* a hidden agent's entry stays visible and clickable */
+  #trend.closed rect.key-hit { pointer-events:none; }
+  #trend g.brow { transition:transform .3s ease; } /* a hidden bar's neighbours close up */
   #ttip { position:fixed; z-index:6; display:none; pointer-events:none; padding:4px 8px; border-radius:6px; font-size:11px; white-space:nowrap;
     background:rgba(255,255,255,.94); box-shadow:0 2px 8px rgba(30,50,100,.2); font-variant-numeric:tabular-nums; }
   #tab { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:5; writing-mode:vertical-rl; padding:12px 5px; font-size:12px;
@@ -128,8 +133,10 @@ const sc = (f, k) => (f && f.scores ? f.scores[k] : null);
 
 // The evolution of the scores: one small chart per score, the steps running from top to bottom, the change against the
 // seed house across (left = worse, right = better, as in the meters). Every chain of the house has a thin line for each
-// agent; the chain playing is drawn over them, growing as the steps play.
+// agent; the chain playing is drawn over them, growing as the steps play. Its legend hides an agent from all five drawings.
 let trend = null;
+const hidden = new Set(); // the hidden agents, by chain key and mode, kept while the viewer stays open
+const agentId = (key, kind) => `${key}:${kind}`;
 function seriesOf(key) { // the houses of one chain, step by step, for each agent (the all-at-once one as allFrame gives it)
   const st = {}, al = {};
   for (const f of data.houses[house].slice(1)) { const m = TAG.exec(f.tag || ''); if (!m || `${m[1]}-c${m[3]}` !== key) continue; (m[4].startsWith('all') ? al : st)[m[4]] = f; }
@@ -168,18 +175,18 @@ function buildTrend() { // the four score charts in a 2x2 matrix: each cell has 
     svg += `<text x="${X0 + 3}" y="${T + PH - 4}">0</text><text x="${X0 + PW - 3}" y="${T + PH - 4}" text-anchor="end">${ymax}</text>`
       + `<line x1="${X0}" x2="${X0 + PW}" y1="${py(0)}" y2="${py(0)}" stroke="rgba(27,30,39,.4)" stroke-dasharray="4 3"/><g clip-path="url(#cp${mi})">`;
     chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => {
-      const col = colour(ci, ki), vals = c[KIND[kind]].map(f => { const v = sc(f, m); return v == null || base == null ? 0 : v - base; });
+      const col = colour(ci, ki), agent = agentId(c.key, kind), vals = c[KIND[kind]].map(f => { const v = sc(f, m); return v == null || base == null ? 0 : v - base; });
       const pts = vals.map((d, i) => [sx(i), py(d)]), dpath = 'M' + pts.map(p => p.join(' ')).join(' L'), cum = pts.map(() => 0);
       for (let i = 1; i < pts.length; i++) cum[i] = cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-      const o = { mi, id: `${mi}_${ci}_${kind}`, kind, col, pts, vals, cum, len: cum[cum.length - 1], dpath, dp, left: X0, right: X0 + PW, playing: c.key === chain,
+      const o = { mi, id: `${mi}_${ci}_${kind}`, agent, kind, col, pts, vals, cum, len: cum[cum.length - 1], dpath, dp, left: X0, right: X0 + PW, playing: c.key === chain,
         steps: ymax };
       lines.push(o);
-      svg += `<path d="${dpath}" fill="none" stroke="${col}" stroke-opacity="${o.playing ? .5 : .6}" stroke-width="1.5"/>`
-        + (o.playing ? '' : `<circle cx="${pts[pts.length - 1][0]}" cy="${pts[pts.length - 1][1]}" r="3.5" fill="${col}"/>`);
+      svg += `<g data-agent="${agent}"><path d="${dpath}" fill="none" stroke="${col}" stroke-opacity="${o.playing ? .5 : .6}" stroke-width="1.5"/>`
+        + (o.playing ? '' : `<circle cx="${pts[pts.length - 1][0]}" cy="${pts[pts.length - 1][1]}" r="3.5" fill="${col}"/>`) + '</g>';
     }));
     svg += '</g>';
     chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // the value of every agent, in its colour: where it is now if it is playing, else where it ended
-      svg += `<g id="tr_${mi}_${ci}_${kind}" style="transform:translateY(${rowTop[mi] + (ci * 2 + ki) * ROW}px)"><text class="big" id="tv_${mi}_${ci}_${kind}" x="${x0 + LW - 6}" y="0" text-anchor="end"></text></g>`;
+      svg += `<g id="tr_${mi}_${ci}_${kind}" data-agent="${agentId(c.key, kind)}" style="transform:translateY(${rowTop[mi] + (ci * 2 + ki) * ROW}px)"><text class="big" id="tv_${mi}_${ci}_${kind}" x="${x0 + LW - 6}" y="0" text-anchor="end"></text></g>`;
     }));
   });
   const changed = (from, to) => { const k = new Set(to.rooms.map(rkey)); return 100 * from.rooms.filter(r => !k.has(rkey(r))).length / from.rooms.length; }; // % of the rooms a call started from that its house no longer has (same cell and type)
@@ -188,23 +195,46 @@ function buildTrend() { // the four score charts in a 2x2 matrix: each cell has 
   svg += `<text class="big" x="${bx0 + BW / 2}" y="14" text-anchor="middle">Max rooms removed</text><text x="${bx0 + BW / 2}" y="26" text-anchor="middle">in one step, as % of</text><text x="${bx0 + BW / 2}" y="37" text-anchor="middle">the house before it</text>`
     + `<line x1="${bx0}" x2="${bx0}" y1="44" y2="${2 * cellH + GV}" stroke="rgba(27,30,39,.3)"/>`;
   chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => {
-    const ry = 44 + (ci * 2 + ki) * rowH + (rowH - BT) / 2, col = colour(ci, ki), vals = perCall(c, kind);
-    svg += `<rect id="bb_${ci}_${kind}" x="${bx0}" y="${ry}" width="${BL}" height="${BT}" rx="3" fill="${col}" fill-opacity=".85" style="transform-origin:${bx0}px ${ry}px; transform:scaleX(0)"/>`
-      + `<text class="big" id="bv_${ci}_${kind}" x="${bx0 + 6}" y="${ry + BT / 2 + 4}"></text>`;
-    bars.push({ id: `${ci}_${kind}`, vals, BL, bmax, col });
+    const ry = 44 + (ci * 2 + ki) * rowH + (rowH - BT) / 2, col = colour(ci, ki), vals = perCall(c, kind), agent = agentId(c.key, kind);
+    svg += `<g class="brow" data-agent="${agent}"><rect id="bb_${ci}_${kind}" x="${bx0}" y="${ry}" width="${BL}" height="${BT}" rx="3" fill="${col}" fill-opacity=".85" style="transform-origin:${bx0}px ${ry}px; transform:scaleX(0)"/>`
+      + `<text class="big" id="bv_${ci}_${kind}" x="${bx0 + 6}" y="${ry + BT / 2 + 4}"></text></g>`;
+    bars.push({ id: `${ci}_${kind}`, agent, i: ci * 2 + ki, vals, BL, bmax, col, rowH });
   }));
-  for (const o of lines) if (o.playing) svg += `<path id="tp_${o.id}" d="${o.dpath}" fill="none" stroke="${o.col}" stroke-width="3" stroke-linejoin="round" stroke-dasharray="${o.len} ${o.len + 10}" stroke-dashoffset="${o.len}"/>`
-    + `<circle id="tm_${o.id}" r="4.5" fill="${o.col}" stroke="#fff" stroke-width="1.5"/><text class="big" id="tl_${o.id}" x="0" y="4"></text>`;
-  lines.forEach((o, i) => { svg += `<path class="hit" data-i="${i}" d="${o.dpath}" clip-path="url(#cp${o.mi})"/>`; }); // wide invisible strokes to hover
-  chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // one legend for all four charts
-    const lx = L + (ci * 2 + ki) * (w - L - R) / (chains.length * 2);
-    svg += `<line x1="${lx}" x2="${lx + 14}" y1="${h - 17}" y2="${h - 17}" stroke="${colour(ci, ki)}" stroke-width="3" stroke-linecap="round"/><text x="${lx + 19}" y="${h - 14}">${c.name} · ${kind === 'inc' ? 'incremental' : 'all-at-once'}</text>`;
+  for (const o of lines) if (o.playing) svg += `<g data-agent="${o.agent}"><path id="tp_${o.id}" d="${o.dpath}" fill="none" stroke="${o.col}" stroke-width="3" stroke-linejoin="round" stroke-dasharray="${o.len} ${o.len + 10}" stroke-dashoffset="${o.len}"/>`
+    + `<circle id="tm_${o.id}" r="4.5" fill="${o.col}" stroke="#fff" stroke-width="1.5"/><text class="big" id="tl_${o.id}" x="0" y="4"></text></g>`;
+  lines.forEach((o, i) => { svg += `<path class="hit" data-i="${i}" data-agent="${o.agent}" d="${o.dpath}" clip-path="url(#cp${o.mi})"/>`; }); // wide invisible strokes to hover
+  chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // one legend for all four charts, and the switch that hides an agent
+    const lx = L + (ci * 2 + ki) * (w - L - R) / (chains.length * 2), agent = agentId(c.key, kind);
+    svg += `<g class="key" data-toggle="${agent}" role="button" tabindex="0" aria-pressed="false"><rect class="key-hit"/>`
+      + `<line x1="${lx}" x2="${lx + 14}" y1="${h - 17}" y2="${h - 17}" stroke="${colour(ci, ki)}" stroke-width="3" stroke-linecap="round"/>`
+      + `<text x="${lx + 19}" y="${h - 14}">${c.name} · ${kind === 'inc' ? 'incremental' : 'all-at-once'}</text></g>`;
   }));
   svg += `<text x="${L}" y="-8">steps run left to right · up = better · the dashed line is the seed house</text>`;
   $('charts').innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${svg}</svg>`;
   for (const o of lines) { o.row = $('tr_' + o.id); o.val = $('tv_' + o.id); if (o.playing) { o.path = $('tp_' + o.id); o.marker = $('tm_' + o.id); o.label = $('tl_' + o.id); } }
   for (const b of bars) { b.rect = $('bb_' + b.id); b.val = $('bv_' + b.id); }
   trend = { lines, bars, fresh: true, rowTop, rowH: ROW };
+  const barRows = $('charts').querySelectorAll('g.brow');
+  bars.forEach((b, i) => { b.group = barRows[i]; });
+  const keys = [...$('charts').querySelectorAll('g.key')];
+  keys.forEach(g => { // the hit target covers the swatch and the label wherever the label falls
+    const t = g.querySelector('text'), r = g.querySelector('rect.key-hit'), x = +t.getAttribute('x') - 19, len = t.getComputedTextLength();
+    r.setAttribute('x', x - 4); r.setAttribute('y', +t.getAttribute('y') - 11);
+    r.setAttribute('width', 19 + len + 8); r.setAttribute('height', 14);
+  });
+  let rows = 0, x = L; // the legend wraps to a row below when the labels do not fit side by side
+  keys.forEach((g, i) => {
+    const rw = +g.querySelector('rect.key-hit').getAttribute('width');
+    if (i && x + rw > w - R) { rows++; x = L; }
+    g.dataset.dx = x - (+g.querySelector('text').getAttribute('x') - 19); g.dataset.row = rows;
+    x += rw + 18;
+  });
+  if (rows) { // make room below the charts, then put the upper rows back where the single row was
+    const tall = h + rows * 16, svgEl = $('charts').querySelector('svg');
+    svgEl.setAttribute('height', tall); svgEl.setAttribute('viewBox', `0 0 ${w} ${tall}`);
+    keys.forEach(g => g.setAttribute('transform', `translate(${g.dataset.dx}, ${(rows - +g.dataset.row) * 16})`));
+  }
+  applyHidden();
 }
 function pointAt(o, len) { // the point at this length along the line
   let k = 1; while (k < o.cum.length - 1 && o.cum[k] < len) k++;
@@ -235,7 +265,7 @@ function updateTrend() {
     const vi = rest ? o.pts.length - 1 : i; // at rest, before step 1 starts, the values and bars show where every agent ended
     const text = fmt(o.vals[i], o.dp); o.now = o.vals[vi];
     if (o.mi === 0) { // the seed-house bar of this agent follows it
-      const b = trend.bars.find(b => b.id === o.id.slice(2)), v = b.vals[vi], f = v / b.bmax;
+      const b = trend.bars.find(b => b.agent === o.agent), v = b.vals[vi], f = v / b.bmax;
       b.rect.style.transition = `transform ${t}s linear`; b.rect.style.transform = `scaleX(${f})`;
       b.val.style.transition = `transform ${t}s linear`; b.val.style.transform = `translateX(${f * b.BL}px)`; b.val.style.fill = b.col; b.val.textContent = v.toFixed(1) + '%';
     }
@@ -247,10 +277,46 @@ function updateTrend() {
     o.from = o.at ?? o.cum[i]; o.to = o.cum[i]; o.t0 = performance.now(); o.ms = t * 1000; // the head travels along the line
   }
   if (!trend.raf) trend.raf = requestAnimationFrame(moveHeads);
-  for (let mi = 0; mi < METRICS.length; mi++) { // each lane lists its agents from the best score (the lowest) to the worst
-    trend.lines.filter(o => o.mi === mi).sort((a, b) => a.now - b.now).forEach((o, r) => { o.row.style.transform = `translateY(${trend.rowTop[mi] + r * trend.rowH}px)`; });
+  layoutLanes();
+}
+function layoutLanes() { // each lane lists the visible agents from the best score (the lowest) to the worst, with no gaps
+  if (!trend) return;
+  for (let mi = 0; mi < METRICS.length; mi++) {
+    trend.lines.filter(o => o.mi === mi && !hidden.has(o.agent)).sort((a, b) => a.now - b.now).forEach((o, r) => { o.row.style.transform = `translateY(${trend.rowTop[mi] + r * trend.rowH}px)`; });
   }
 }
+function layoutBars() { // the visible bars close up; the pitch and the bar height stay, so the column ends higher
+  if (!trend) return;
+  let rank = 0;
+  for (const b of trend.bars) {
+    if (hidden.has(b.agent)) continue;
+    if (b.group) b.group.style.transform = `translateY(${(rank - b.i) * b.rowH}px)`;
+    rank++;
+  }
+}
+function applyHidden() { // the one place visibility acts: a hidden agent's elements disappear, then the layouts close up
+  if (!trend) return;
+  const svg = $('charts').querySelector('svg'); if (!svg) return;
+  svg.querySelectorAll('[data-agent]').forEach(el => { el.style.display = hidden.has(el.dataset.agent) ? 'none' : ''; });
+  svg.querySelectorAll('[data-toggle]').forEach(el => {
+    const on = hidden.has(el.dataset.toggle);
+    el.classList.toggle('off', on); el.setAttribute('aria-pressed', String(on));
+  });
+  layoutLanes(); layoutBars();
+}
+function toggleAgent(id) { // the legend switches one agent's five drawings on or off
+  if (hidden.has(id)) hidden.delete(id); else hidden.add(id);
+  $('ttip').style.display = 'none'; applyHidden();
+}
+$('charts').addEventListener('click', e => {
+  const g = e.target.closest && e.target.closest('[data-toggle]');
+  if (g) toggleAgent(g.dataset.toggle);
+});
+$('charts').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const g = e.target.closest && e.target.closest('[data-toggle]');
+  if (g) { e.preventDefault(); e.stopPropagation(); toggleAgent(g.dataset.toggle); }
+});
 addEventListener('resize', () => { buildTrend(); updateTrend(); });
 const veil = p => { // how see-through the score panel is: none at the left end, the old 25% tint and 8px blur in the middle, solid at the right
   const a = p <= 0.5 ? 0.25 * p / 0.5 : 0.25 + 0.75 * (p - 0.5) / 0.5;
