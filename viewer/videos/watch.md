@@ -4,7 +4,7 @@ These are screenshots of the viewer tool, and help build a stronger intuition fo
 
 Each room is a square and the lines connecting adjacent ones represent corridors through their shared doors. Lines without a square represent hallways. Yellow rooms are the ones added by the agent.
 
-Quick fun fact: Fable behaves more locally than Opus !
+Fun fact: When acting incrementally, Fable behaves more locally than Opus !
 
 ## House 1 - default / simplify + cost / cost 
 
