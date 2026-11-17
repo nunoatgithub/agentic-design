@@ -11,6 +11,8 @@ Four incremental step-by-step growth trajectories of the same base house (house 
 - center: introducing request to reduce complexity before adding, plus awareness about construction costs
 - right: agent is told only about construction costs
 
+Fun fact: Fable behaves more locally than Opus !
+
 ### Fable 5.2 medium
 ![Fable 5.2 medium](./fable52.gif)
 
