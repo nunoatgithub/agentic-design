@@ -4,14 +4,14 @@ These are screenshots of the viewer tool, and help build a stronger intuition fo
 
 Each room is a square and the lines connecting adjacent ones represent corridors through their shared doors. Lines without a square represent hallways. Yellow rooms are the ones added by the agent.
 
+Fun fact: Fable behaves more locally than Opus !
+
 ## House 1 - default / simplify + cost / cost 
 
 Four incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
 - left: agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost
 - center: introducing request to reduce complexity before adding, plus awareness about construction costs
 - right: agent is told only about construction costs
-
-Fun fact: Fable behaves more locally than Opus !
 
 ### Fable 5.2 medium
 ![Fable 5.2 medium](./fable52.gif)
