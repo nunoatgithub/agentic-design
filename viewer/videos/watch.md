@@ -27,7 +27,10 @@ Four incremental step-by-step growth trajectories of the same base house (house 
 
 The incremental step-by-step growth trajectories of the same base house, when five different agents are asked to simplify it before adding a room : 
 
-It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step. It's interesting to observe that a reorganizing Sonnet refactors as boldly as Opus on default behavior (see above).
+It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. 
+Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step. 
+Fable refactors less than Opus, but more than Sonnet.
+It's interesting to observe that a reorganizing Sonnet refactors as boldly as Opus on default behavior (see above).
 
 What these animations do not show is how Deepseek models are so much slower than Claude ones, or how Pro is so much slower and error-prone than Flash.
 
