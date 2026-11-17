@@ -137,36 +137,38 @@ A chain has 59 calls, made in this order: all at once from step 0, step 1, all a
 **Agents.** The Sonnet, Opus, Fable and GPT-6 Luna chains are at medium effort. Opus 5.5 ran chain 9 on seed house 1 in the
 hallway, reorganising, cost and cost-only runs, and chain 10 on seed house 2 in the hallway run. Fable 5.2 ran chain 13
 on seed house 1 in the same four runs, chain 17 on seed house 1 in the hallway run, and chain 14 on seed house 2 in the
-hallway run. DeepSeek chains 5 and 7 in the hallway run and in
+hallway run. DeepSeek flash (`deepseek-flash`, DeepSeek-V4.1-Flash-1017) ran chains 5 and 7 in the hallway run and in
 the reorganising run (seed houses 1 and 3; chains 6 and 8 not run) and chains 1 and 3 in the cost run and in the
-cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking, with the model `deepseek-flash`
-(DeepSeek-V4.1-Flash-1017): it posts the house prompt to DeepSeek's Anthropic-compatible
-API with thinking enabled at low effort, and no Claude Code system or environment wrapper. It is a separate harness
-and is reported separately. DeepSeek is many times slower than Sonnet (a mean of 92 seconds per call against 18, and of 1.6 hours per chain against
-0.3), and it was run at low thinking because at high effort it was even slower.
+cost-only run (seed houses 1 and 3). DeepSeek V4 Pro (`deepseek-v4-pro`, DeepSeek-V4-Pro-0813) ran chain 17 on seed
+house 1 in the reorganising run. Both use a standalone DeepSeek adapter at low thinking: it posts the house prompt to
+DeepSeek's Anthropic-compatible API with thinking enabled at low effort, and no Claude Code system or environment
+wrapper. It is a separate harness and is reported separately. DeepSeek flash is many times slower than Sonnet (a mean
+of 92 seconds per call against 18, and of 1.6 hours per chain against 0.3), and it was run at low thinking because at
+high effort it was even slower. V4 Pro, on its one chain, averaged 170 seconds per call and 4.1 hours for the chain.
 
-| Run          | Chains | Seed houses | Model          | Harness                                                        |
-| ------------ | ------ | ----------- | -------------- | -------------------------------------------------------------- |
-| Hallways     | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.310                                            |
-| Hallways     | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
-| Hallways     | 9, 10  | 1, 2        | Opus 5.5       | Claude Code 2.1.322                                            |
-| Hallways     | 13, 17 | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
-| Hallways     | 14     | 2           | Fable 5.2      | Claude Code 2.1.325                                            |
-| No hallways  | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
-| No hallways  | 5–8    | 1–4         | GPT-6 Luna     | GitHub Copilot CLI 1.0.105                                     |
-| No hallways  | 9–12   | 1–4         | Sonnet 5.5     | Claude Code 2.1.314                                            |
-| Reorganising | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.314 (chain 1), 2.1.319 (chains 2–4)            |
-| Reorganising | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
-| Reorganising | 9      | 1           | Opus 5.5       | Claude Code 2.1.325                                            |
-| Reorganising | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
-| Cost         | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
-| Cost         | 5–8    | 1–4         | Sonnet 5.5     | Claude Code 2.1.322                                            |
-| Cost         | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
-| Cost         | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
-| Cost only    | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
-| Cost only    | 5, 7   | 1, 3        | Sonnet 5.5     | Claude Code 2.1.322                                            |
-| Cost only    | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
-| Cost only    | 13     | 1           | Fable 5.2      | Claude Code 2.1.325                                            |
+| Run          | Chains | Seed houses | Model           | Harness                                                        |
+| ------------ | ------ | ----------- | --------------- | -------------------------------------------------------------- |
+| Hallways     | 1–4    | 1–4         | Sonnet 5.5      | Claude Code 2.1.310                                            |
+| Hallways     | 5, 7   | 1, 3        | deepseek-flash  | DeepSeek API adapter (low effort)                              |
+| Hallways     | 9, 10  | 1, 2        | Opus 5.5        | Claude Code 2.1.322                                            |
+| Hallways     | 13, 17 | 1           | Fable 5.2       | Claude Code 2.1.325                                            |
+| Hallways     | 14     | 2           | Fable 5.2       | Claude Code 2.1.325                                            |
+| No hallways  | 1–4    | 1–4         | Sonnet 5.5      | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
+| No hallways  | 5–8    | 1–4         | GPT-6 Luna      | GitHub Copilot CLI 1.0.105                                     |
+| No hallways  | 9–12   | 1–4         | Sonnet 5.5      | Claude Code 2.1.314                                            |
+| Reorganising | 1–4    | 1–4         | Sonnet 5.5      | Claude Code 2.1.314 (chain 1), 2.1.319 (chains 2–4)            |
+| Reorganising | 5, 7   | 1, 3        | deepseek-flash  | DeepSeek API adapter (low effort)                              |
+| Reorganising | 17     | 1           | deepseek-v4-pro | DeepSeek API adapter (low effort)                              |
+| Reorganising | 9      | 1           | Opus 5.5        | Claude Code 2.1.325                                            |
+| Reorganising | 13     | 1           | Fable 5.2       | Claude Code 2.1.325                                            |
+| Cost         | 1, 3   | 1, 3        | deepseek-flash  | DeepSeek API adapter (low effort)                              |
+| Cost         | 5–8    | 1–4         | Sonnet 5.5      | Claude Code 2.1.322                                            |
+| Cost         | 9      | 1           | Opus 5.5        | Claude Code 2.1.322                                            |
+| Cost         | 13     | 1           | Fable 5.2       | Claude Code 2.1.325                                            |
+| Cost only    | 1, 3   | 1, 3        | deepseek-flash  | DeepSeek API adapter (low effort)                              |
+| Cost only    | 5, 7   | 1, 3        | Sonnet 5.5      | Claude Code 2.1.322                                            |
+| Cost only    | 9      | 1           | Opus 5.5        | Claude Code 2.1.322                                            |
+| Cost only    | 13     | 1           | Fable 5.2       | Claude Code 2.1.325                                            |
 
 The models are reported separately, never pooled.
 

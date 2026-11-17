@@ -101,36 +101,49 @@ The reorganising run has one Sonnet 5.5 chain per seed house:
 ```
 
 The cost run is the reorganising run with every command priced. It has four Sonnet 5.5 chains, 5–8, one per seed
-house, and two DeepSeek chains, 1 and 3, on seed houses 1 and 3:
+house, and two DeepSeek flash chains, 1 and 3, on seed houses 1 and 3:
 
 ```
 .venv/bin/python -m house.run_100_rooms --refactor --cost --effort medium --house 1 --chain 5
 .venv/bin/python -m house.run_100_rooms --refactor --cost --agent deepseek --effort low --house 1 --chain 1
 ```
 
-Houses 2–4 take Sonnet chains 6–8; house 3 takes DeepSeek chain 3.
+Houses 2–4 take Sonnet chains 6–8; house 3 takes DeepSeek flash chain 3.
 
 The cost-only run is the hallway run with every command priced. It has two Sonnet 5.5 chains, 5 and 7, and two
-DeepSeek chains, 1 and 3, on seed houses 1 and 3:
+DeepSeek flash chains, 1 and 3, on seed houses 1 and 3:
 
 ```
 .venv/bin/python -m house.run_100_rooms --cost --effort medium --house 1 --chain 5
 .venv/bin/python -m house.run_100_rooms --cost --agent deepseek --effort low --house 1 --chain 1
 ```
 
-House 3 takes Sonnet chain 7 and DeepSeek chain 3.
+House 3 takes Sonnet chain 7 and DeepSeek flash chain 3.
 
-The DeepSeek chains use the standalone DeepSeek adapter at low thinking. It posts the house prompt directly to
+The DeepSeek models use the standalone DeepSeek adapter at low thinking. It posts the house prompt directly to
 DeepSeek's Anthropic-compatible API with thinking enabled at low effort, and its records carry
 `agent_cli: deepseek-api` and `effort: low`. It uses `DEEPSEEK_API_KEY` (or `ANTHROPIC_AUTH_TOKEN`) and
-`DEEPSEEK_BASE_URL` (or `ANTHROPIC_BASE_URL`, default `https://api.deepseek.com/anthropic`). The hallway run and the
-reorganising run each have DeepSeek chains 5 and 7, on seed houses 1 and 3:
+`DEEPSEEK_BASE_URL` (or `ANTHROPIC_BASE_URL`, default `https://api.deepseek.com/anthropic`). `--model` picks the
+model, `deepseek-flash` by default; the adapter prices each call from that model's published table and the time of
+day. The hallway run and the reorganising run each have DeepSeek flash chains 5 and 7, on seed houses 1 and 3:
 
 ```
 .venv/bin/python -m house.run_100_rooms --agent deepseek --effort low --house 1 --chain 5
 .venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor \
   --agent deepseek --effort low --house 1 --chain 5
 ```
+
+The reorganising run also has one DeepSeek V4 Pro chain, 17 on seed house 1:
+
+```
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor \
+  --agent deepseek --model deepseek-v4-pro --effort low --house 1 --chain 17
+```
+
+That chain was stopped four times by calls that failed all three tries. Each time the three failed records were
+deleted and the chain resumed from that call. The deleted tries are not in the data, and run ids are reused, so the
+report identifies them by call and cost. The chain was paused across DeepSeek's peak-pricing windows (01:00-04:00 and
+06:00-10:00 UTC, Monday to Friday), which the adapter's prices account for.
 
 The Opus 5.5 chains run through Claude Code at medium effort: chain 9 on seed house 1 in the hallway, reorganising,
 cost and cost-only runs, and chain 10 on seed house 2 in the hallway run:

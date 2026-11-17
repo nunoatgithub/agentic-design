@@ -1,0 +1,470 @@
+label: deepseekv4pro-low-h1-c17-step11   at 2026-11-16T17:13:06+00:00   commands: 394
+
+SCRIPT
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+remove room R5
+remove room R6
+remove room R7
+remove room R8
+remove room R9
+remove room R10
+remove room R11
+remove room R12
+remove room R13
+remove room R14
+remove room R15
+remove room R16
+remove room R17
+remove room R18
+remove room R19
+remove room R20
+remove room R21
+remove room R22
+remove room R23
+remove room R24
+remove room R25
+remove room R26
+remove room R27
+remove room R28
+remove room R29
+remove room R30
+remove room R31
+remove room R32
+remove room R33
+remove room R34
+remove room R35
+remove room R36
+remove room R37
+remove room R38
+remove room R39
+remove room R40
+remove room R41
+remove room R42
+remove room R43
+remove room R44
+remove room R45
+remove room R46
+remove room R47
+remove room R48
+remove room R49
+remove room R50
+remove room R51
+remove room R52
+remove room R53
+remove room R54
+remove room R55
+remove room R56
+remove room R57
+remove room R58
+remove room R59
+remove room R60
+remove room R61
+remove room R62
+remove room R63
+remove room R64
+remove room R65
+remove room R66
+remove room R67
+remove room R68
+remove room R69
+remove room R70
+remove room R71
+remove room R72
+remove room R73
+remove room R74
+remove room R75
+remove room R76
+remove room R77
+remove room R78
+remove room R79
+remove room R200
+remove room R1001
+remove room R1002
+remove room R1003
+remove room R1004
+remove room R1005
+remove room R1006
+remove room R1007
+remove room R1008
+remove room R1009
+remove room R1010
+remove room R1011
+remove room R1012
+remove room R1013
+remove room R1014
+remove room R1015
+remove room R1016
+remove room R1017
+remove room R1018
+remove room R1019
+remove room R1020
+remove room R1021
+remove room R1022
+remove room R1023
+remove room R1024
+remove room R1025
+remove room R1026
+remove room R1027
+remove room R1028
+remove room R1029
+remove room R1030
+remove room R1031
+remove room R1032
+remove room R1033
+remove room R1034
+remove room R1035
+remove room R1036
+remove room R1037
+remove room R1038
+remove room R1039
+remove room R1040
+remove room R1041
+remove room R1042
+remove room R1043
+remove room R1044
+remove room R1045
+remove room R1046
+remove room R1047
+remove room R1048
+remove room R1049
+remove room R1050
+remove room R1051
+remove room R1052
+remove room R1053
+remove room R1054
+remove room R1055
+remove room R1056
+room R2001 living room A8
+room R2002 kitchen A7
+room R2101 bedroom B3
+room R2102 bedroom C3
+room R2103 bedroom C5
+room R2104 bedroom C7
+room R2105 bedroom C9
+room R2106 bedroom C11
+room R2107 bedroom C13
+room R2108 bedroom D3
+room R2109 bedroom D5
+room R2110 bedroom D7
+room R2111 bedroom D9
+room R2112 bedroom D11
+room R2113 bedroom D13
+room R2114 bedroom E3
+room R2115 bedroom E5
+room R2116 bedroom E7
+room R2117 bedroom E9
+room R2118 bedroom E11
+room R2119 bedroom E13
+room R2120 bedroom F3
+room R2121 bedroom F5
+room R2122 bedroom F7
+room R2123 bedroom F9
+room R2124 bedroom F11
+room R2125 bedroom F13
+room R2126 bedroom G3
+room R2127 bedroom G5
+room R2128 bedroom G7
+room R2129 bedroom G9
+room R2130 bedroom G11
+room R2131 bedroom G13
+room R2132 bedroom H3
+room R2133 bedroom H5
+room R2134 bedroom H7
+room R2135 bedroom H9
+room R2136 bedroom H11
+room R2137 bedroom H13
+room R2138 bedroom I3
+room R2139 bedroom I5
+room R2140 bedroom I7
+room R2201 bathroom I9
+room R2202 bathroom I11
+room R2203 bathroom I13
+room R2204 bathroom J3
+room R2205 bathroom J5
+room R2206 bathroom J7
+room R2207 bathroom J9
+room R2208 bathroom J11
+room R2209 bathroom J13
+room R2210 bathroom K3
+room R2211 bathroom K5
+room R2212 bathroom K7
+room R2213 bathroom K9
+room R2214 bathroom K11
+room R2215 bathroom K13
+room R2216 bathroom L3
+room R2217 bathroom L5
+room R2218 bathroom L7
+room R2219 bathroom L9
+room R2220 bathroom L11
+room R2221 bathroom L13
+room R2222 bathroom M3
+room R2223 bathroom M5
+room R2224 bathroom M7
+room R2225 bathroom M9
+room R2226 bathroom M11
+room R2227 bathroom M13
+room R2228 bathroom N3
+room R2229 bathroom N5
+room R2230 bathroom N7
+room R2231 bathroom N9
+room R2232 bathroom N11
+room R2233 bathroom N13
+room R2234 bathroom O3
+room R2235 bathroom O5
+room R2236 bathroom O7
+room R2237 bathroom O9
+room R2238 bathroom O11
+room R2239 bathroom O13
+room R2301 hallway B4
+room R2302 hallway B5
+room R2303 hallway B6
+room R2304 hallway B7
+room R2305 hallway B8
+room R2306 hallway B9
+room R2307 hallway B10
+room R2308 hallway B11
+room R2309 hallway B12
+room R2310 hallway C4
+room R2311 hallway C8
+room R2312 hallway C12
+room R2313 hallway D4
+room R2314 hallway D8
+room R2315 hallway D12
+room R2316 hallway E4
+room R2317 hallway E8
+room R2318 hallway E12
+room R2319 hallway F4
+room R2320 hallway F8
+room R2321 hallway F12
+room R2322 hallway G4
+room R2323 hallway G8
+room R2324 hallway G12
+room R2325 hallway H4
+room R2326 hallway H8
+room R2327 hallway H12
+room R2328 hallway I4
+room R2329 hallway I8
+room R2330 hallway I12
+room R2331 hallway J4
+room R2332 hallway J8
+room R2333 hallway J12
+room R2334 hallway K4
+room R2335 hallway K8
+room R2336 hallway K12
+room R2337 hallway L4
+room R2338 hallway L8
+room R2339 hallway L12
+room R2340 hallway M4
+room R2341 hallway M8
+room R2342 hallway M12
+room R2343 hallway N4
+room R2344 hallway N8
+room R2345 hallway N12
+room R2346 hallway O4
+room R2347 hallway O8
+room R2348 hallway O12
+door A8|north
+door A7|A8
+door A8|B8
+door B3|B4
+door B4|B5
+door B5|B6
+door B6|B7
+door B7|B8
+door B8|B9
+door B9|B10
+door B10|B11
+door B11|B12
+door B4|C4
+door C4|D4
+door D4|E4
+door E4|F4
+door F4|G4
+door G4|H4
+door H4|I4
+door I4|J4
+door J4|K4
+door K4|L4
+door L4|M4
+door M4|N4
+door N4|O4
+door B8|C8
+door C8|D8
+door D8|E8
+door E8|F8
+door F8|G8
+door G8|H8
+door H8|I8
+door I8|J8
+door J8|K8
+door K8|L8
+door L8|M8
+door M8|N8
+door N8|O8
+door B12|C12
+door C12|D12
+door D12|E12
+door E12|F12
+door F12|G12
+door G12|H12
+door H12|I12
+door I12|J12
+door J12|K12
+door K12|L12
+door L12|M12
+door M12|N12
+door N12|O12
+door C3|C4
+door C5|C4
+door C7|C8
+door C9|C8
+door C11|C12
+door C13|C12
+door D3|D4
+door D5|D4
+door D7|D8
+door D9|D8
+door D11|D12
+door D13|D12
+door E3|E4
+door E5|E4
+door E7|E8
+door E9|E8
+door E11|E12
+door E13|E12
+door F3|F4
+door F5|F4
+door F7|F8
+door F9|F8
+door F11|F12
+door F13|F12
+door G3|G4
+door G5|G4
+door G7|G8
+door G9|G8
+door G11|G12
+door G13|G12
+door H3|H4
+door H5|H4
+door H7|H8
+door H9|H8
+door H11|H12
+door H13|H12
+door I3|I4
+door I5|I4
+door I7|I8
+door I9|I8
+door I11|I12
+door I13|I12
+door J3|J4
+door J5|J4
+door J7|J8
+door J9|J8
+door J11|J12
+door J13|J12
+door K3|K4
+door K5|K4
+door K7|K8
+door K9|K8
+door K11|K12
+door K13|K12
+door L3|L4
+door L5|L4
+door L7|L8
+door L9|L8
+door L11|L12
+door L13|L12
+door M3|M4
+door M5|M4
+door M7|M8
+door M9|M8
+door M11|M12
+door M13|M12
+door N3|N4
+door N5|N4
+door N7|N8
+door N9|N8
+door N11|N12
+door N13|N12
+door O3|O4
+door O5|O4
+door O7|O8
+door O9|O8
+door O11|O12
+door O13|O12
+
+run_0533
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+                                                  +-------+[ENTRY]+
+                                                  | R2002 | R2001 |
+A                                                 |kitchen| living|
+                                                  |               |
+                  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+
+                  | R2101 | R2301 | R2302 | R2303 | R2304 | R2305 | R2306 | R2307 | R2308 | R2309 |
+B                 |bedroom|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+                  |                                                                               |
+                  +-------+-[   ]-+-------+-------+-------+-[   ]-+-------+-------+-------+-[   ]-+-------+
+                  | R2102 | R2310 | R2103 |       | R2104 | R2311 | R2105 |       | R2106 | R2312 | R2107 |
+C                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2108 | R2313 | R2109 |       | R2110 | R2314 | R2111 |       | R2112 | R2315 | R2113 |
+D                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2114 | R2316 | R2115 |       | R2116 | R2317 | R2117 |       | R2118 | R2318 | R2119 |
+E                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2120 | R2319 | R2121 |       | R2122 | R2320 | R2123 |       | R2124 | R2321 | R2125 |
+F                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2126 | R2322 | R2127 |       | R2128 | R2323 | R2129 |       | R2130 | R2324 | R2131 |
+G                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2132 | R2325 | R2133 |       | R2134 | R2326 | R2135 |       | R2136 | R2327 | R2137 |
+H                 |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|       |bedroom|hallway|bedroom|
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2138 | R2328 | R2139 |       | R2140 | R2329 | R2201 |       | R2202 | R2330 | R2203 |
+I                 |bedroom|hallway|bedroom|       |bedroom|hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2204 | R2331 | R2205 |       | R2206 | R2332 | R2207 |       | R2208 | R2333 | R2209 |
+J                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2210 | R2334 | R2211 |       | R2212 | R2335 | R2213 |       | R2214 | R2336 | R2215 |
+K                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2216 | R2337 | R2217 |       | R2218 | R2338 | R2219 |       | R2220 | R2339 | R2221 |
+L                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2222 | R2340 | R2223 |       | R2224 | R2341 | R2225 |       | R2226 | R2342 | R2227 |
+M                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2228 | R2343 | R2229 |       | R2230 | R2344 | R2231 |       | R2232 | R2345 | R2233 |
+N                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-[   ]-+-------+       +-------+-[   ]-+-------+       +-------+-[   ]-+-------+
+                  | R2234 | R2346 | R2235 |       | R2236 | R2347 | R2237 |       | R2238 | R2348 | R2239 |
+O                 |  bath |hallway|  bath |       |  bath |hallway|  bath |       |  bath |hallway|  bath |
+                  |                       |       |                       |       |                       |
+                  +-------+-------+-------+       +-------+-------+-------+       +-------+-------+-------+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  14.93
+compactness       58
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

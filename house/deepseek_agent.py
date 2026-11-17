@@ -24,19 +24,22 @@ SYSTEM_PROMPT = "You are a helpful assistant."
 ADAPTER_VERSION = "1"
 TIMEOUT_SECONDS = 1800
 
-# DeepSeek's published prices, USD per million tokens; peak is 01:00-04:00 and 06:00-10:00 UTC, Monday-Friday.
-PRICES = {"off": {"hit": 0.003, "miss": 0.15, "out": 0.60},
-          "peak": {"hit": 0.006, "miss": 0.30, "out": 1.20}}
+# DeepSeek's published prices, USD per million tokens, by model; peak is 01:00-04:00 and 06:00-10:00 UTC, Monday-Friday.
+PRICES = {"deepseek-flash": {"off": {"hit": 0.003, "miss": 0.15, "out": 0.60},
+                             "peak": {"hit": 0.006, "miss": 0.30, "out": 1.20}},
+          "deepseek-v4-pro": {"off": {"hit": 0.022, "miss": 0.66, "out": 1.98},
+                              "peak": {"hit": 0.044, "miss": 1.32, "out": 3.96}}}
 
 
 def is_peak(at: datetime) -> bool:
     return at.weekday() < 5 and (1 <= at.hour < 4 or 6 <= at.hour < 10)
 
 
-def cost_usd(input_tokens: int, cache_read: int, output_tokens: int, at: Optional[datetime] = None) -> float:
-    """The DeepSeek price of one call, from the token counts and the published off-peak/peak table."""
+def cost_usd(input_tokens: int, cache_read: int, output_tokens: int, at: Optional[datetime] = None,
+             model_id: str = DEFAULT_MODEL) -> float:
+    """The DeepSeek price of one call, from the token counts, the model and the published off-peak/peak table."""
     at = at or datetime.now(timezone.utc)
-    price = PRICES["peak" if is_peak(at) else "off"]
+    price = PRICES[model_id]["peak" if is_peak(at) else "off"]
     return round((input_tokens * price["miss"] + cache_read * price["hit"] + output_tokens * price["out"]) / 1_000_000, 6)
 
 
@@ -93,7 +96,7 @@ def ask_deepseek(prompt: str, model_id: str = DEFAULT_MODEL, effort: Optional[st
             "cache_read_input_tokens": cache_read,
             "output_tokens": output_tokens,
             "thinking_tokens": (usage.get("output_tokens_details") or {}).get("thinking_tokens", 0),
-            "cost_usd": cost_usd(input_tokens + cache_write, cache_read, output_tokens),
+            "cost_usd": cost_usd(input_tokens + cache_write, cache_read, output_tokens, model_id=model_id),
             "duration_ms": duration_ms,
         },
         cut_off=stop_reason == "max_tokens",

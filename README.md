@@ -103,22 +103,25 @@ agent call.
 The code, analysis plan and data folder of each run are listed in
 [running the experiment](docs/running-the-experiment.md#the-runs-in-the-report).
 
-Five later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses
-([the second report](REPORT_100_rooms.md)): with hallways, without hallways, with a request to reorganise the house
-before adding to it, with that request and a cost on every command, and with the cost alone. Claude Sonnet 5.5
-refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring and only added
-rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more than Sonnet, both
-step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not stop refactoring.
-Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked to reorganise, it
-kept refactoring as the house grew. With a cost on every command as well, it went back to refactoring once. With the
-cost and no request to reorganise, it did not refactor at all. Claude Fable 5.2, left to itself, rebuilt one of its
-two houses early; in the other, no agent adding one room rebuilt it, and the agents adding all the rooms at once
-rebuilt it only while it was still close to the seed. Asked to reorganise, Fable refactored a few times. With a cost
-on every command as well, its all-at-once agents refactored more often, not less. With the cost alone it did not
-refactor. In most runs it made no clear difference whether the rooms were added one at a time or all at once. The
-exceptions were one of Fable's two houses in run 1, and the run with a cost and no request to reorganise, the same
-conditions in which the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended with
-more corridor rooms when built one room at a time than when built all at once. Sonnet's houses did not.
+Five later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses ([the
+second report](REPORT_100_rooms.md)): with hallways, without hallways, with a request to reorganise the house before
+adding to it, with that request and a cost on every command, and with the cost alone. Claude Sonnet 5.5 refactored only
+when asked to reorganise. If every command also had a cost, it stopped refactoring and only added rooms to the house it
+was given, the cheapest way. Asked to reorganise, DeepSeek flash refactored far more than Sonnet, both step by step and
+all at once. A cost on every command made it refactor less, but DeepSeek flash did not stop refactoring. DeepSeek V4
+Pro, tried on one house in the run that asked agents to reorganise, refactored in most calls; on that house, building
+one room at a time ended worse than building all at once. Claude Opus 5.5, left to itself, refactored once at the start
+and then built on what it had. Asked to reorganise, it kept refactoring as the house grew. With a cost on every command
+as well, it went back to refactoring once. With the cost and no request to reorganise, it did not refactor at all.
+Claude Fable 5.2, left to itself, refactored one of its two houses early and then built on it. In the other house it
+never refactored when adding one room, and refactored when adding all the rooms at once only while the house was still
+close to the seed. Asked to reorganise, Fable refactored a few times. A cost on every command as well made it refactor
+more often, not less, when it added all the rooms at once. With the cost alone it did not refactor. In most runs it made
+no clear difference whether the rooms were added one at a time or all at once. The exceptions were one of Fable's two
+houses in run 1, DeepSeek V4 Pro's one house in the reorganise run, and the run with a cost and no request to
+reorganise, the same conditions in which the small grid showed a difference. In that run, Opus's house ended with more
+corridor rooms when built one room at a time than when built all at once. So did one of DeepSeek flash's two houses.
+Sonnet's houses did not.
 
 ## Repository
 

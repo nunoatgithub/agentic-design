@@ -1,0 +1,618 @@
+label: deepseekv4pro-low-h1-c17-step28   at 2026-11-17T11:11:31+00:00   commands: 542
+
+SCRIPT
+remove room R700
+remove room R701
+remove room R702
+remove room R703
+remove room R704
+remove room R705
+remove room R706
+remove room R707
+remove room R708
+remove room R709
+remove room R710
+remove room R711
+remove room R712
+remove room R713
+remove room R714
+remove room R715
+remove room R716
+remove room R717
+remove room R718
+remove room R719
+remove room R720
+remove room R721
+remove room R722
+remove room R723
+remove room R724
+remove room R725
+remove room R726
+remove room R727
+remove room R728
+remove room R729
+remove room R730
+remove room R731
+remove room R732
+remove room R733
+remove room R734
+remove room R735
+remove room R736
+remove room R737
+remove room R738
+remove room R739
+remove room R740
+remove room R741
+remove room R742
+remove room R743
+remove room R744
+remove room R745
+remove room R746
+remove room R747
+remove room R748
+remove room R749
+remove room R750
+remove room R751
+remove room R752
+remove room R753
+remove room R754
+remove room R755
+remove room R756
+remove room R757
+remove room R758
+remove room R759
+remove room R760
+remove room R761
+remove room R762
+remove room R763
+remove room R764
+remove room R765
+remove room R766
+remove room R767
+remove room R768
+remove room R769
+remove room R770
+remove room R771
+remove room R772
+remove room R773
+remove room R774
+remove room R775
+remove room R776
+remove room R777
+remove room R778
+remove room R779
+remove room R780
+remove room R781
+remove room R782
+remove room R783
+remove room R784
+remove room R785
+remove room R786
+remove room R787
+remove room R788
+remove room R789
+remove room R790
+remove room R791
+remove room R792
+remove room R793
+remove room R794
+remove room R795
+remove room R796
+remove room R797
+remove room R798
+remove room R799
+remove room R800
+remove room R801
+remove room R802
+remove room R803
+remove room R804
+remove room R805
+remove room R806
+remove room R807
+remove room R808
+remove room R809
+remove room R810
+remove room R811
+remove room R812
+remove room R813
+remove room R814
+remove room R815
+remove room R816
+remove room R817
+remove room R818
+remove room R819
+remove room R820
+remove room R821
+remove room R822
+remove room R823
+remove room R824
+remove room R825
+remove room R826
+remove room R827
+remove room R828
+remove room R829
+remove room R830
+remove room R831
+remove room R832
+remove room R833
+remove room R834
+remove room R835
+remove room R836
+remove room R837
+remove room R838
+remove room R839
+remove room R840
+remove room R841
+remove room R842
+remove room R843
+remove room R844
+remove room R845
+remove room R846
+remove room R847
+remove room R848
+remove room R849
+remove room R850
+remove room R851
+remove room R852
+remove room R853
+remove room R854
+remove room R855
+remove room R856
+remove room R857
+remove room R858
+remove room R859
+remove room R860
+remove room R861
+remove room R862
+remove room R863
+remove room R864
+remove room R865
+remove room R866
+remove room R867
+remove room R868
+remove room R869
+remove room R870
+remove room R871
+remove room R872
+remove room R873
+remove room R874
+remove room R875
+remove room R876
+remove room R877
+remove room R878
+remove room R879
+remove room R880
+remove room R881
+remove room R882
+remove room R883
+remove room R884
+remove room R885
+remove room R886
+remove room R887
+remove room R888
+remove room R889
+remove room R890
+remove room R891
+remove room R892
+remove room R893
+remove room R894
+remove room R895
+remove room R896
+remove room R897
+remove room R898
+remove room R899
+remove room R900
+remove room R901
+remove room R902
+remove room R903
+remove room R904
+remove room R905
+remove room R906
+remove room R907
+remove room R908
+remove room R909
+remove room R910
+remove room R911
+room R1 living room A1
+room R2 kitchen A2
+room R3 bedroom A3
+room R4 bedroom A4
+room R5 bedroom A5
+room R6 bedroom A6
+room R7 bedroom A7
+room R8 bedroom A8
+room R9 bedroom A9
+room R10 bedroom A10
+room R11 bedroom A11
+room R12 bedroom A12
+room R13 bedroom A13
+room R14 bedroom A14
+room R99 hallway A15
+room R100 hallway B1
+room R101 hallway B2
+room R102 hallway B3
+room R103 hallway B4
+room R104 hallway B5
+room R105 hallway B6
+room R106 hallway B7
+room R107 hallway B8
+room R108 hallway B9
+room R109 hallway B10
+room R110 hallway B11
+room R111 hallway B12
+room R112 hallway B13
+room R113 hallway B14
+room R114 hallway B15
+room R15 bedroom C1
+room R16 bedroom C2
+room R17 bedroom C3
+room R18 bedroom C4
+room R19 bedroom C5
+room R20 bedroom C6
+room R21 bedroom C7
+room R22 bedroom C8
+room R23 bedroom C9
+room R24 bedroom C10
+room R25 bedroom C11
+room R26 bedroom C12
+room R27 bedroom C13
+room R28 bedroom C14
+room R115 hallway C15
+room R29 bedroom D1
+room R30 bedroom D2
+room R31 bedroom D3
+room R32 bedroom D4
+room R33 bedroom D5
+room R34 bedroom D6
+room R35 bedroom D7
+room R36 bedroom D8
+room R37 bedroom D9
+room R38 bedroom D10
+room R39 bedroom D11
+room R40 bedroom D12
+room R41 bedroom D13
+room R42 bedroom D14
+room R116 hallway D15
+room R117 hallway E1
+room R118 hallway E2
+room R119 hallway E3
+room R120 hallway E4
+room R121 hallway E5
+room R122 hallway E6
+room R123 hallway E7
+room R124 hallway E8
+room R125 hallway E9
+room R126 hallway E10
+room R127 hallway E11
+room R128 hallway E12
+room R129 hallway E13
+room R130 hallway E14
+room R131 hallway E15
+room R43 bedroom F1
+room R44 bedroom F2
+room R45 bedroom F3
+room R46 bedroom F4
+room R47 bedroom F5
+room R48 bedroom F6
+room R49 bedroom F7
+room R50 bedroom F8
+room R51 bathroom F9
+room R52 bathroom F10
+room R53 bathroom F11
+room R54 bathroom F12
+room R55 bathroom F13
+room R56 bathroom F14
+room R132 hallway F15
+room R57 bathroom G1
+room R58 bathroom G2
+room R59 bathroom G3
+room R60 bathroom G4
+room R61 bathroom G5
+room R62 bathroom G6
+room R63 bathroom G7
+room R64 bathroom G8
+room R65 bathroom G9
+room R66 bathroom G10
+room R67 bathroom G11
+room R68 bathroom G12
+room R69 bathroom G13
+room R70 bathroom G14
+room R133 hallway G15
+room R134 hallway H1
+room R135 hallway H2
+room R136 hallway H3
+room R137 hallway H4
+room R138 hallway H5
+room R139 hallway H6
+room R140 hallway H7
+room R141 hallway H8
+room R142 hallway H9
+room R143 hallway H10
+room R144 hallway H11
+room R145 hallway H12
+room R146 hallway H13
+room R147 hallway H14
+room R148 hallway H15
+room R71 bathroom I1
+room R72 bathroom I2
+room R73 bathroom I3
+room R74 bathroom I4
+room R75 bathroom I5
+room R76 bathroom I6
+room R77 bathroom I7
+room R78 bathroom I8
+room R79 bathroom I9
+room R80 bathroom I10
+room R81 bathroom I11
+room R82 bathroom I12
+room R83 bathroom I13
+room R84 bathroom I14
+room R149 hallway I15
+room R85 bathroom J1
+room R86 bathroom J2
+room R87 bathroom J3
+room R88 bathroom J4
+room R89 bathroom J5
+room R90 bathroom J6
+room R91 bathroom J7
+room R92 bathroom J8
+room R93 bathroom J9
+room R94 bathroom J10
+room R95 bathroom J11
+room R96 bathroom J12
+room R97 bathroom J13
+room R98 bathroom J14
+room R150 hallway J15
+room R151 hallway K1
+room R152 hallway K2
+room R153 hallway K3
+room R154 hallway K4
+room R155 hallway K5
+room R156 hallway K6
+room R157 hallway K7
+room R158 hallway K8
+room R159 hallway K9
+room R160 hallway K10
+room R161 hallway K11
+room R162 hallway K12
+room R163 hallway K13
+room R164 hallway K14
+room R165 hallway K15
+door A1|north
+door A1|A2
+door A1|B1
+door A3|B3
+door A4|B4
+door A5|B5
+door A6|B6
+door A7|B7
+door A8|B8
+door A9|B9
+door A10|B10
+door A11|B11
+door A12|B12
+door A13|B13
+door A14|B14
+door C1|B1
+door C2|B2
+door C3|B3
+door C4|B4
+door C5|B5
+door C6|B6
+door C7|B7
+door C8|B8
+door C9|B9
+door C10|B10
+door C11|B11
+door C12|B12
+door C13|B13
+door C14|B14
+door D1|E1
+door D2|E2
+door D3|E3
+door D4|E4
+door D5|E5
+door D6|E6
+door D7|E7
+door D8|E8
+door D9|E9
+door D10|E10
+door D11|E11
+door D12|E12
+door D13|E13
+door D14|E14
+door F1|E1
+door F2|E2
+door F3|E3
+door F4|E4
+door F5|E5
+door F6|E6
+door F7|E7
+door F8|E8
+door F9|E9
+door F10|E10
+door F11|E11
+door F12|E12
+door F13|E13
+door F14|E14
+door G1|H1
+door G2|H2
+door G3|H3
+door G4|H4
+door G5|H5
+door G6|H6
+door G7|H7
+door G8|H8
+door G9|H9
+door G10|H10
+door G11|H11
+door G12|H12
+door G13|H13
+door G14|H14
+door I1|H1
+door I2|H2
+door I3|H3
+door I4|H4
+door I5|H5
+door I6|H6
+door I7|H7
+door I8|H8
+door I9|H9
+door I10|H10
+door I11|H11
+door I12|H12
+door I13|H13
+door I14|H14
+door J1|K1
+door J2|K2
+door J3|K3
+door J4|K4
+door J5|K5
+door J6|K6
+door J7|K7
+door J8|K8
+door J9|K9
+door J10|K10
+door J11|K11
+door J12|K12
+door J13|K13
+door J14|K14
+door B1|B2
+door B2|B3
+door B3|B4
+door B4|B5
+door B5|B6
+door B6|B7
+door B7|B8
+door B8|B9
+door B9|B10
+door B10|B11
+door B11|B12
+door B12|B13
+door B13|B14
+door B14|B15
+door E1|E2
+door E2|E3
+door E3|E4
+door E4|E5
+door E5|E6
+door E6|E7
+door E7|E8
+door E8|E9
+door E9|E10
+door E10|E11
+door E11|E12
+door E12|E13
+door E13|E14
+door E14|E15
+door H1|H2
+door H2|H3
+door H3|H4
+door H4|H5
+door H5|H6
+door H6|H7
+door H7|H8
+door H8|H9
+door H9|H10
+door H10|H11
+door H11|H12
+door H12|H13
+door H13|H14
+door H14|H15
+door K1|K2
+door K2|K3
+door K3|K4
+door K4|K5
+door K5|K6
+door K6|K7
+door K7|K8
+door K8|K9
+door K9|K10
+door K10|K11
+door K11|K12
+door K12|K13
+door K13|K14
+door K14|K15
+door A15|B15
+door C15|B15
+door C15|D15
+door D15|E15
+door F15|E15
+door F15|G15
+door G15|H15
+door I15|H15
+door I15|J15
+door J15|K15
+
+run_0585
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |   R1  |   R2  |   R3  |   R4  |   R5  |   R6  |   R7  |   R8  |   R9  |  R10  |  R11  |  R12  |  R13  |  R14  |  R99  |
+A | living|kitchen|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|
+  |               |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R100 |  R101 |  R102 |  R103 |  R104 |  R105 |  R106 |  R107 |  R108 |  R109 |  R110 |  R111 |  R112 |  R113 |  R114 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R15  |  R16  |  R17  |  R18  |  R19  |  R20  |  R21  |  R22  |  R23  |  R24  |  R25  |  R26  |  R27  |  R28  |  R115 |
+C |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  |  R29  |  R30  |  R31  |  R32  |  R33  |  R34  |  R35  |  R36  |  R37  |  R38  |  R39  |  R40  |  R41  |  R42  |  R116 |
+D |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R117 |  R118 |  R119 |  R120 |  R121 |  R122 |  R123 |  R124 |  R125 |  R126 |  R127 |  R128 |  R129 |  R130 |  R131 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R43  |  R44  |  R45  |  R46  |  R47  |  R48  |  R49  |  R50  |  R51  |  R52  |  R53  |  R54  |  R55  |  R56  |  R132 |
+F |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  |  R57  |  R58  |  R59  |  R60  |  R61  |  R62  |  R63  |  R64  |  R65  |  R66  |  R67  |  R68  |  R69  |  R70  |  R133 |
+G |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R134 |  R135 |  R136 |  R137 |  R138 |  R139 |  R140 |  R141 |  R142 |  R143 |  R144 |  R145 |  R146 |  R147 |  R148 |
+H |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R71  |  R72  |  R73  |  R74  |  R75  |  R76  |  R77  |  R78  |  R79  |  R80  |  R81  |  R82  |  R83  |  R84  |  R149 |
+I |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  |  R85  |  R86  |  R87  |  R88  |  R89  |  R90  |  R91  |  R92  |  R93  |  R94  |  R95  |  R96  |  R97  |  R98  |  R150 |
+J |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R151 |  R152 |  R153 |  R154 |  R155 |  R156 |  R157 |  R158 |  R159 |  R160 |  R161 |  R162 |  R163 |  R164 |  R165 |
+K |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+L
+
+
+
+M
+
+
+
+N
+
+
+
+O
+
+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  16.57
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

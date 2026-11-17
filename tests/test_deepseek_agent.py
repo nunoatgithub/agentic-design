@@ -72,3 +72,5 @@ def test_deepseek_cost_uses_the_off_peak_and_peak_prices():
     friday_0200 = datetime(2026, 11, 6, 2, 0, tzinfo=timezone.utc)
     assert cost_usd(1_000_000, 0, 1_000_000, at=saturday_noon) == 0.75
     assert cost_usd(1_000_000, 0, 1_000_000, at=friday_0200) == 1.5
+    assert cost_usd(1_000_000, 0, 1_000_000, at=saturday_noon, model_id="deepseek-v4-pro") == 2.64
+    assert cost_usd(1_000_000, 0, 1_000_000, at=friday_0200, model_id="deepseek-v4-pro") == 5.28
