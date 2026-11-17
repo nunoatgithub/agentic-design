@@ -6,25 +6,32 @@ Each room is a square and the lines connecting adjacent ones represent corridors
 
 ## House 1 - default / simplify + cost / cost 
 
-Three incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
+Four incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
 - left: agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost
 - center: introducing request to reduce complexity before adding, plus awareness about construction costs
 - right: agent is told only about construction costs
 
+### Fable 5.2 medium
+![Fable 5.2 medium](./fable52.gif)
+
 ### Opus 5.5 medium 
 ![Opus 5.5 medium](./opus55.gif)
-
-### Deepseek 4.1 flash low 
-![Deepseek low](./deepseek.gif)
 
 ### Sonnet 5.5 medium
 ![Opus 5.5 medium](./sonnet55.gif)
 
-## House 1 - reorganize only, using opus / deepseek / sonnet 
+### Deepseek 4.1 flash low 
+![Deepseek low](./deepseek.gif)
 
-The incremental step-by-step growth trajectories of the same base house, when three different agents are asked to simplify it before adding a room : 
-(left) opus 5.5 medium, (center) deepseek 4.1 flash low, (right) sonnet 5.5 medium
+## House 1 - simplify only, using claude and deepseek 
+
+The incremental step-by-step growth trajectories of the same base house, when five different agents are asked to simplify it before adding a room : 
 
 It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step. It's interesting to observe that a reorganizing Sonnet refactors as boldly as Opus on default behavior (see above).
 
-![3 agents refactor house 1](./3-agents-refactor-h1.gif)
+What these animations do not show is how Deepseek models are so much slower than Claude ones, or how Pro is so much slower and error-prone than Flash.
+
+Reading from left to right: fable 5.2 medium, opus 5.5 medium, sonnet 5.5 medium, deepseek 4.1 flash low, deepseek v4 pro low
+
+![claude agents refactor house 1](./claude-refactor-h1.gif)
+![deepseek agents refactor house 1](./deepseek-refactor-h1.gif)
