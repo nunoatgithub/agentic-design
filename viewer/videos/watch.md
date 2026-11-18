@@ -20,7 +20,7 @@ Four incremental step-by-step growth trajectories of the same base house (house 
 ![Opus 5.5 medium](./opus55.gif)
 
 ### Sonnet 5.5 medium
-![Opus 5.5 medium](./sonnet55.gif)
+![Sonnet 5.5 medium](./sonnet55.gif)
 
 ### Deepseek 4.1 flash low 
 ![Deepseek low](./deepseek.gif)
@@ -38,5 +38,5 @@ What these animations do not show is how Deepseek models are so much slower than
 
 Reading from left to right: fable 5.2 medium, opus 5.5 medium, sonnet 5.5 medium, deepseek 4.1 flash low, deepseek v4 pro low
 
-![claude agents refactor house 1](./claude-refactor-h1.gif)
+![claude agents refactor house 1](../claude-refactor-h1.gif)
 ![deepseek agents refactor house 1](./deepseek-refactor-h1.gif)
